@@ -1,5 +1,5 @@
 ﻿Option Explicit On
-
+'Test comment
 
 Public Class Eingabe
 
@@ -48,8 +48,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub donateButton_Click(sender As Object, e As EventArgs) Handles donateButton.Click
-        Browser.Show()
-        Browser.WebBrowser1.Navigate("http://cmayer.bplaced.net/Spenden.html")
+
+        Process.Start("http://cmayer.bplaced.net/Spenden.html")
 
     End Sub
 
@@ -405,7 +405,7 @@ Public Class Eingabe
 
     Private Sub backButton_Click(sender As Object, e As EventArgs) Handles backButton.Click
         'TODO: backButton mit Sin, Cos,...
-        'TODO: backButton mit eingabeStelle und Operatoren
+        'backButton mit eingabeStelle und Operatoren
         Dim returnHelper As String
 
         displayFunction = displayFunction.Substring(0, displayFunction.Length - 1)
@@ -420,8 +420,7 @@ Public Class Eingabe
                 eingabeZahlen(eingabeStellen) = 0
             End Try
 
-            'ElseIf eingabeZahlen(eingabeStellen) = 0 And eingabeStellen = 1 Then
-            '    MsgBox("jetzt")
+
         Else
             eingabeStellen = eingabeStellen - 1
             redimArrays()
@@ -497,7 +496,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "abs("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         absStelle(eingabeStellen) = True
@@ -522,7 +521,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "sqrt("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         sqrtStelle(eingabeStellen) = True
@@ -549,7 +548,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "ln("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         lnStelle(eingabeStellen) = True
@@ -574,7 +573,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "sin("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         sinStelle(eingabeStellen) = True
@@ -599,7 +598,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "cos("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         cosStelle(eingabeStellen) = True
@@ -624,7 +623,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "tan("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         tanStelle(eingabeStellen) = True
@@ -660,7 +659,7 @@ Public Class Eingabe
         End Try
         displayFunction = displayFunction & "log("
         displayBox2.Text = displayFunction
-        'eingabeStellen += 1
+
 
         redimArrays()
         logStelle(eingabeStellen) = True

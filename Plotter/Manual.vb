@@ -429,8 +429,6 @@ Public Class Manual
                 ReDim Preserve logStelle4((bracketClose - bracketOpen))
 
 
-                'replace special expressions in brackets
-
                 'TODO: special expression in brackets
 
                 'calculate bracket content
@@ -482,18 +480,12 @@ Public Class Manual
             End If
 
             replaceSpecials()
-            'richitge Reihenfolge des Ersetzens
+
             bracketCounter += 1
             bracketOpen = 0
             bracketClose = 0
 
-            'sin(1) = True
-            'zahlen(2) = -10
-            ' |
-            ' V
-            'zahlen(1) = 0.531
-            'zahlen(2) = -10
-            '-10 entfernen und Rest aufrücken
+
         Next y
         yValue = berechneTerm()
         yValue = (yMax / yStep) - (yValue / yStep)
@@ -644,7 +636,7 @@ Line4:
         Dim i
         For i = 0 To eingabeZahlen4.Length - 1
             If potencyStelle4(i) = True Then
-                'ergebnis = Math.Pow(eingabeZahlen4(i - 1), eingabeZahlen4(i + 1))
+
                 ergebnis = Math.Pow(eingabeZahlen4(i - 1), eingabeZahlen4(i + 1))
                 eingabeZahlen4(i - 1) = ergebnis
                 copyBracketArrays(i)
@@ -747,7 +739,7 @@ Line2:
 
             End If
         Next i
-        'ergebnis = eingabeZahlen3(1)
+
 
         Return ergebnis
     End Function
