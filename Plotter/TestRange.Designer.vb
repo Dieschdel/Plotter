@@ -23,7 +23,7 @@ Partial Class TestRange
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.TextField = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Button1
@@ -35,19 +35,19 @@ Partial Class TestRange
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'TextBox1
+        'TextField
         '
-        Me.TextBox1.Location = New System.Drawing.Point(281, 222)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(241, 20)
-        Me.TextBox1.TabIndex = 1
+        Me.TextField.Location = New System.Drawing.Point(281, 222)
+        Me.TextField.Name = "TextField"
+        Me.TextField.Size = New System.Drawing.Size(241, 20)
+        Me.TextField.TabIndex = 1
         '
         'TestRange
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(839, 439)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.TextField)
         Me.Controls.Add(Me.Button1)
         Me.Name = "TestRange"
         Me.Text = "TestRange"
@@ -57,5 +57,5 @@ Partial Class TestRange
     End Sub
 
     Friend WithEvents Button1 As Button
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents TextField As TextBox
 End Class

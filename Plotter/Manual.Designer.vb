@@ -35,10 +35,6 @@ Partial Class Manual
         Me.xMaxbox = New System.Windows.Forms.TextBox()
         Me.xMinbox = New System.Windows.Forms.TextBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.FunctionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.LinearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ManualToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InfoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -106,30 +102,9 @@ Partial Class Manual
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FunctionToolStripMenuItem, Me.InfoToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InfoToolStripMenuItem})
         resources.ApplyResources(Me.MenuStrip1, "MenuStrip1")
         Me.MenuStrip1.Name = "MenuStrip1"
-        '
-        'FunctionToolStripMenuItem
-        '
-        Me.FunctionToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LinearToolStripMenuItem, Me.ManualToolStripMenuItem, Me.ExitToolStripMenuItem})
-        Me.FunctionToolStripMenuItem.Name = "FunctionToolStripMenuItem"
-        resources.ApplyResources(Me.FunctionToolStripMenuItem, "FunctionToolStripMenuItem")
-        '
-        'LinearToolStripMenuItem
-        '
-        Me.LinearToolStripMenuItem.Name = "LinearToolStripMenuItem"
-        resources.ApplyResources(Me.LinearToolStripMenuItem, "LinearToolStripMenuItem")
-        '
-        'ManualToolStripMenuItem
-        '
-        Me.ManualToolStripMenuItem.Name = "ManualToolStripMenuItem"
-        resources.ApplyResources(Me.ManualToolStripMenuItem, "ManualToolStripMenuItem")
-        '
-        'ExitToolStripMenuItem
-        '
-        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
-        resources.ApplyResources(Me.ExitToolStripMenuItem, "ExitToolStripMenuItem")
         '
         'InfoToolStripMenuItem
         '
@@ -198,10 +173,6 @@ Partial Class Manual
     Friend WithEvents xMaxbox As TextBox
     Friend WithEvents xMinbox As TextBox
     Friend WithEvents MenuStrip1 As MenuStrip
-    Friend WithEvents FunctionToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents LinearToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ExitToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ManualToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InfoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents Button1 As Button
     Friend WithEvents Label5 As Label

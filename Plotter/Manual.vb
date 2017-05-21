@@ -1,5 +1,5 @@
 ﻿Option Explicit On
-
+'Version 1.0.0
 
 Public Class Manual
     Const boarder = 81
@@ -18,28 +18,29 @@ Public Class Manual
 
     Dim BoxLaenge As Long
 
-    Dim multiStelle2() As Boolean, divideStelle2() As Boolean, plusStelle2() As Boolean, minusStelle2() As Boolean
-    Dim multiStelle3() As Boolean, divideStelle3() As Boolean, plusStelle3() As Boolean, minusStelle3() As Boolean
-    Dim multiStelle4() As Boolean, divideStelle4() As Boolean, plusStelle4() As Boolean, minusStelle4() As Boolean
-    Dim potencyStelle2() As Boolean, potencyStelle3() As Boolean, potencyStelle4() As Boolean
+    Dim multiPos2() As Boolean, dividePos2() As Boolean, plusPos2() As Boolean, minusPos2() As Boolean
+    Dim multiPos3() As Boolean, dividePos3() As Boolean, plusPos3() As Boolean, minusPos3() As Boolean
+    Dim multiPos4() As Boolean, dividePos4() As Boolean, plusPos4() As Boolean, minusPos4() As Boolean
+    Dim potencyPos2() As Boolean, potencyPos3() As Boolean, potencyPos4() As Boolean
 
-    Dim eStelle2() As Boolean, eStelle3() As Boolean, piStelle2() As Boolean, piStelle3() As Boolean
-    Dim eStelle4() As Boolean, piStelle4() As Boolean
+    Dim ePos2() As Boolean, ePos3() As Boolean, piPos2() As Boolean, piPos3() As Boolean
+    Dim ePos4() As Boolean, piPos4() As Boolean
 
-    Dim openBracketStelle2() As Boolean, openBracketStelle3() As Boolean, closeBracketStelle2() As Boolean, closeBracketStelle3() As Boolean
-    Dim openBracketStelle4() As Boolean, closeBracketStelle4() As Boolean
+    Dim openBracketPos2() As Boolean, openBracketPos3() As Boolean, closeBracketPos2() As Boolean, closeBracketPos3() As Boolean
+    Dim openBracketPos4() As Boolean, closeBracketPos4() As Boolean
 
-    Dim sinStelle2() As Boolean, sinStelle3() As Boolean, sinStelle4() As Boolean
-    Dim cosStelle2() As Boolean, cosStelle3() As Boolean, cosStelle4() As Boolean
-    Dim tanStelle2() As Boolean, tanStelle3() As Boolean, tanStelle4() As Boolean
+    Dim sinPos2() As Boolean, sinPos3() As Boolean, sinPos4() As Boolean
+    Dim cosPos2() As Boolean, cosPos3() As Boolean, cosPos4() As Boolean
+    Dim tanPos2() As Boolean, tanPos3() As Boolean, tanPos4() As Boolean
 
-    Dim absStelle2() As Boolean, absStelle3() As Boolean, absStelle4() As Boolean
+    Dim absPos2() As Boolean, absPos3() As Boolean, absPos4() As Boolean
 
-    Dim sqrtStelle2() As Boolean, sqrtStelle3() As Boolean, sqrtStelle4() As Boolean
-    Dim lnStelle2() As Boolean, lnStelle3() As Boolean, lnStelle4() As Boolean
-    Dim logStelle2() As Boolean, logStelle3() As Boolean, logStelle4() As Boolean
+    Dim sqrtPos2() As Boolean, sqrtPos3() As Boolean, sqrtPos4() As Boolean
+    Dim lnPos2() As Boolean, lnPos3() As Boolean, lnPos4() As Boolean
+    Dim logPos2() As Boolean, logPos3() As Boolean, logPos4() As Boolean
+    Dim rndPos2() As Boolean, rndPos3() As Boolean, rndPos4() As Boolean
 
-    Dim eingabeZahlen2() As Double, eingabeZahlen3() As Double, eingabeZahlen4() As Double
+    Dim entryNumber2() As Double, entryNumber3() As Double, entryNumber4() As Double
     Dim xPosition2() As Boolean, xPosition3() As Boolean, xPosition4() As Boolean
     Dim eingabeState As Boolean = False
 
@@ -48,8 +49,8 @@ Public Class Manual
 
     Dim grf As System.Drawing.Graphics
 
+
     Private Sub Manual_MouseClick(sender As Object, e As MouseEventArgs) Handles Me.MouseClick
-        'TODO: Genauigkeit an windowRange anpassen
         If Control.MousePosition.X - Me.Location.X - 9 <= Me.Width And Control.MousePosition.Y - Me.Location.Y - 31 <= (Me.Height - boarder) Then
             grf.DrawLine(Pens.Black, New Point((Control.MousePosition.X - 4) - Me.Location.X - 9, Control.MousePosition.Y - Me.Location.Y - 31), New Point((Control.MousePosition.X + 4) - Me.Location.X - 9, Control.MousePosition.Y - Me.Location.Y - 31))
             grf.DrawLine(Pens.Black, New Point(Control.MousePosition.X - Me.Location.X - 9, (Control.MousePosition.Y - 4) - Me.Location.Y - 31), New Point(Control.MousePosition.X - Me.Location.X - 9, (Control.MousePosition.Y + 4) - Me.Location.Y - 31))
@@ -80,21 +81,16 @@ Public Class Manual
         yOld = 0
     End Sub
 
-    Private Sub LinearToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LinearToolStripMenuItem.Click
-        Me.Hide()
-        Linear.Show()
-    End Sub
-
-
-
-    Private Sub ExitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExitToolStripMenuItem.Click
-        Linear.Close()
-        Me.Close()
-    End Sub
-
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         'xMinbox.SelectAll()
         'Timer1.Enabled = True
+
+        Me.Width = My.Computer.Screen.WorkingArea.Width / 2.259
+        Me.Height = Me.Width * 1.106
+        '@ FullHD
+        'Me.Width = 850
+        'Me.Height = 940
+
         Try
             Me.Location = New Point(My.Settings.LocationX, My.Settings.LocationY)
         Catch ex As Exception
@@ -103,8 +99,6 @@ Public Class Manual
         Me.KeyPreview = True
 
         grf = CreateGraphics()
-        Me.Width = 850
-        Me.Height = 940
     End Sub
 
     Private Sub Manual_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
@@ -119,8 +113,6 @@ Public Class Manual
             My.Settings.LocationY = Me.Location.Y
         Catch ex As Exception
         End Try
-
-
     End Sub
 
     Private Sub plotButton_Click(sender As Object, e As EventArgs) Handles plotButton.Click
@@ -132,9 +124,6 @@ Public Class Manual
             plotFunction()
         End If
     End Sub
-
-
-
 
     Private Sub windowButton_Click(sender As Object, e As EventArgs) Handles windowButton.Click
         getWindow()
@@ -157,7 +146,6 @@ Public Class Manual
             End If
         End If
     End Sub
-
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If displayBox IsNot "" Then
@@ -199,7 +187,11 @@ Public Class Manual
         xStep = (xMax - xMin) / Me.Width
         yStep = (yMax - yMin) / (Me.Height - boarder)
 
-        grf.Clear(Color.White)
+
+        If Module1.keepGraph = False Then
+            grf.Clear(Color.White)
+        End If
+
         grf.DrawLine(Pens.Black, New Point(0, (Me.Height - boarder)), New Point(Me.Width, (Me.Height - boarder)))
 
         xAxis = 0 + (yMax / yStep)
@@ -234,29 +226,27 @@ Public Class Manual
         setOld()
     End Sub
 
-
-
-
     Private Sub plotFunction()
 
-        multiStelle2 = Module1.multiStelle
-        divideStelle2 = Module1.divideStelle
-        plusStelle2 = Module1.plusStelle
-        minusStelle2 = Module1.minusStelle
-        eingabeZahlen2 = Module1.eingabeZahlen
+        multiPos2 = Module1.multiPos
+        dividePos2 = Module1.dividePos
+        plusPos2 = Module1.plusPos
+        minusPos2 = Module1.minusPos
+        entryNumber2 = Module1.entryNumber
         xPosition2 = Module1.xPosition
-        eStelle2 = Module1.eStelle
-        piStelle2 = Module1.piStelle
-        openBracketStelle2 = Module1.openBracketStelle
-        closeBracketStelle2 = Module1.closeBracketStelle
-        sinStelle2 = Module1.sinStelle
-        cosStelle2 = Module1.cosStelle
-        tanStelle2 = Module1.tanStelle
-        potencyStelle2 = Module1.potencyStelle
-        absStelle2 = Module1.absStelle
-        sqrtStelle2 = Module1.sqrtStelle
-        lnStelle2 = Module1.lnStelle
-        logStelle2 = Module1.logStelle
+        ePos2 = Module1.ePos
+        piPos2 = Module1.piPos
+        openBracketPos2 = Module1.openBracketPos
+        closeBracketPos2 = Module1.closeBracketPos
+        sinPos2 = Module1.sinPos
+        cosPos2 = Module1.cosPos
+        tanPos2 = Module1.tanPos
+        potencyPos2 = Module1.potencyPos
+        absPos2 = Module1.absPos
+        sqrtPos2 = Module1.sqrtPos
+        lnPos2 = Module1.lnPos
+        logPos2 = Module1.logPos
+        rndPos2 = Module1.rndPos
 
         setWindow()
 
@@ -279,60 +269,62 @@ Public Class Manual
         'copy old to new arrays
         Dim ergebnis As Double = 0
 
-        ReDim multiStelle3(multiStelle2.Length - 1)
-        ReDim divideStelle3(divideStelle2.Length - 1)
-        ReDim plusStelle3(plusStelle2.Length - 1)
-        ReDim minusStelle3(minusStelle2.Length - 1)
-        ReDim eingabeZahlen3(eingabeZahlen2.Length - 1)
+        ReDim multiPos3(multiPos2.Length - 1)
+        ReDim dividePos3(dividePos2.Length - 1)
+        ReDim plusPos3(plusPos2.Length - 1)
+        ReDim minusPos3(minusPos2.Length - 1)
+        ReDim entryNumber3(entryNumber2.Length - 1)
         ReDim xPosition3(xPosition2.Length - 1)
-        ReDim eStelle3(eStelle2.Length - 1)
-        ReDim piStelle3(piStelle2.Length - 1)
-        ReDim openBracketStelle3(openBracketStelle2.Length - 1)
-        ReDim closeBracketStelle3(closeBracketStelle2.Length - 1)
-        ReDim sinStelle3(sinStelle2.Length - 1)
-        ReDim cosStelle3(cosStelle2.Length - 1)
-        ReDim tanStelle3(tanStelle2.Length - 1)
-        ReDim potencyStelle3(potencyStelle2.Length - 1)
-        ReDim absStelle3(absStelle2.Length - 1)
-        ReDim sqrtStelle3(sqrtStelle2.Length - 1)
-        ReDim lnStelle3(lnStelle2.Length - 1)
-        ReDim logStelle3(logStelle2.Length - 1)
+        ReDim ePos3(ePos2.Length - 1)
+        ReDim piPos3(piPos2.Length - 1)
+        ReDim openBracketPos3(openBracketPos2.Length - 1)
+        ReDim closeBracketPos3(closeBracketPos2.Length - 1)
+        ReDim sinPos3(sinPos2.Length - 1)
+        ReDim cosPos3(cosPos2.Length - 1)
+        ReDim tanPos3(tanPos2.Length - 1)
+        ReDim potencyPos3(potencyPos2.Length - 1)
+        ReDim absPos3(absPos2.Length - 1)
+        ReDim sqrtPos3(sqrtPos2.Length - 1)
+        ReDim lnPos3(lnPos2.Length - 1)
+        ReDim logPos3(logPos2.Length - 1)
+        ReDim rndPos3(rndPos2.Length - 1)
 
 
-        multiStelle2.CopyTo(multiStelle3, 0)
-        divideStelle2.CopyTo(divideStelle3, 0)
-        plusStelle2.CopyTo(plusStelle3, 0)
-        minusStelle2.CopyTo(minusStelle3, 0)
-        eingabeZahlen2.CopyTo(eingabeZahlen3, 0)
+        multiPos2.CopyTo(multiPos3, 0)
+        dividePos2.CopyTo(dividePos3, 0)
+        plusPos2.CopyTo(plusPos3, 0)
+        minusPos2.CopyTo(minusPos3, 0)
+        entryNumber2.CopyTo(entryNumber3, 0)
         xPosition2.CopyTo(xPosition3, 0)
-        eStelle2.CopyTo(eStelle3, 0)
-        piStelle2.CopyTo(piStelle3, 0)
-        openBracketStelle2.CopyTo(openBracketStelle3, 0)
-        closeBracketStelle2.CopyTo(closeBracketStelle3, 0)
-        sinStelle2.CopyTo(sinStelle3, 0)
-        cosStelle2.CopyTo(cosStelle3, 0)
-        tanStelle2.CopyTo(tanStelle3, 0)
-        potencyStelle2.CopyTo(potencyStelle3, 0)
-        absStelle2.CopyTo(absStelle3, 0)
-        sqrtStelle2.CopyTo(sqrtStelle3, 0)
-        lnStelle2.CopyTo(lnStelle3, 0)
-        logStelle2.CopyTo(logStelle3, 0)
+        ePos2.CopyTo(ePos3, 0)
+        piPos2.CopyTo(piPos3, 0)
+        openBracketPos2.CopyTo(openBracketPos3, 0)
+        closeBracketPos2.CopyTo(closeBracketPos3, 0)
+        sinPos2.CopyTo(sinPos3, 0)
+        cosPos2.CopyTo(cosPos3, 0)
+        tanPos2.CopyTo(tanPos3, 0)
+        potencyPos2.CopyTo(potencyPos3, 0)
+        absPos2.CopyTo(absPos3, 0)
+        sqrtPos2.CopyTo(sqrtPos3, 0)
+        lnPos2.CopyTo(lnPos3, 0)
+        logPos2.CopyTo(logPos3, 0)
+        rndPos2.CopyTo(rndPos3, 0)
 
         'replace all constants and variables
         Dim j
         For j = 0 To xPosition3.Length - 1
             If xPosition3(j) = True Then
-                eingabeZahlen3(j) = xValue
+                entryNumber3(j) = xValue
             End If
         Next j
-        For j = 0 To eStelle3.Length - 1
-            If eStelle3(j) = True Then
-                eingabeZahlen3(j) = Math.E
+        For j = 0 To ePos3.Length - 1
+            If ePos3(j) = True Then
+                entryNumber3(j) = Math.E
             End If
         Next j
-        For j = 0 To piStelle3.Length - 1
-            If piStelle3(j) = True Then
-                eingabeZahlen3(j) = Math.PI
+        For j = 0 To piPos3.Length - 1
+            If piPos3(j) = True Then
+                entryNumber3(j) = Math.PI
             End If
         Next j
 
@@ -340,15 +332,12 @@ Public Class Manual
 
         'total number of brackets
         Dim y
-        For y = 0 To openBracketStelle3.Length - 1
-            If openBracketStelle3(y) = True Then
+        For y = 0 To openBracketPos3.Length - 1
+            If openBracketPos3(y) = True Then
                 bracketNumber += 1
             End If
         Next y
 
-
-
-        'Loop hier
         y = 0
         For y = 0 To bracketNumber
 
@@ -359,12 +348,12 @@ Public Class Manual
             Dim k
             k = 1
 
-            For k = 0 + 1 To openBracketStelle3.Length - 1
-                If closeBracketStelle3(k) = True Then
-                    bracketClose = k                                                     'Stelle )       open -> j, close -> k             
+            For k = 0 + 1 To openBracketPos3.Length - 1
+                If closeBracketPos3(k) = True Then
+                    bracketClose = k                                                     'Pos )       open -> j, close -> k             
                     For j = k To 0 Step -1
-                        If openBracketStelle3(j) = True Then
-                            bracketOpen = j                                             'Stelle (
+                        If openBracketPos3(j) = True Then
+                            bracketOpen = j                                             'Pos (
                             Exit For
                         End If
                     Next j
@@ -372,114 +361,118 @@ Public Class Manual
                 End If
             Next k
 
-
-
             'start bracket Operations
             If bracketOpen > 0 Then
-                ReDim multiStelle4(multiStelle3.Length - 1)
-                ReDim divideStelle4(divideStelle3.Length - 1)
-                ReDim plusStelle4(plusStelle3.Length - 1)
-                ReDim minusStelle4(minusStelle3.Length - 1)
-                ReDim eingabeZahlen4(eingabeZahlen3.Length - 1)
+
+                'replace Expressions in Brackets
+                bracketExpressions()
+
+
+                ReDim multiPos4(multiPos3.Length - 1)
+                ReDim dividePos4(dividePos3.Length - 1)
+                ReDim plusPos4(plusPos3.Length - 1)
+                ReDim minusPos4(minusPos3.Length - 1)
+                ReDim entryNumber4(entryNumber3.Length - 1)
                 ReDim xPosition4(xPosition3.Length - 1)
-                ReDim eStelle4(eStelle3.Length - 1)
-                ReDim piStelle4(piStelle3.Length - 1)
-                ReDim sinStelle4(sinStelle3.Length - 1)
-                ReDim cosStelle4(cosStelle3.Length - 1)
-                ReDim tanStelle4(tanStelle3.Length - 1)
-                ReDim potencyStelle4(potencyStelle3.Length - 1)
-                ReDim absStelle4(absStelle3.Length - 1)
-                ReDim sqrtStelle4(sqrtStelle3.Length - 1)
-                ReDim lnStelle4(lnStelle3.Length - 1)
-                ReDim logStelle4(logStelle3.Length - 1)
+                ReDim ePos4(ePos3.Length - 1)
+                ReDim piPos4(piPos3.Length - 1)
+                ReDim sinPos4(sinPos3.Length - 1)
+                ReDim cosPos4(cosPos3.Length - 1)
+                ReDim tanPos4(tanPos3.Length - 1)
+                ReDim potencyPos4(potencyPos3.Length - 1)
+                ReDim absPos4(absPos3.Length - 1)
+                ReDim sqrtPos4(sqrtPos3.Length - 1)
+                ReDim lnPos4(lnPos3.Length - 1)
+                ReDim logPos4(logPos3.Length - 1)
+                ReDim rndPos4(rndPos3.Length - 1)
 
-                multiStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, multiStelle3, multiStelle4)
-                divideStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, divideStelle3, divideStelle4)
-                divideStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, divideStelle3, divideStelle4)
-                plusStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, plusStelle3, plusStelle4)
-                minusStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, minusStelle3, minusStelle4)
-                eingabeZahlen4 = schreibeKlammerninArray(bracketOpen, bracketClose, eingabeZahlen3, eingabeZahlen4)
+                multiPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, multiPos3, multiPos4)
+                dividePos4 = schreibeKlammerninArray(bracketOpen, bracketClose, dividePos3, dividePos4)
+                dividePos4 = schreibeKlammerninArray(bracketOpen, bracketClose, dividePos3, dividePos4)
+                plusPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, plusPos3, plusPos4)
+                minusPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, minusPos3, minusPos4)
+                entryNumber4 = schreibeKlammerninArray(bracketOpen, bracketClose, entryNumber3, entryNumber4)
                 xPosition4 = schreibeKlammerninArray(bracketOpen, bracketClose, xPosition3, xPosition4)
-                eStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, eStelle3, eStelle4)
-                piStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, piStelle3, piStelle4)
-                sinStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, sinStelle3, sinStelle4)
-                cosStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, cosStelle3, cosStelle4)
-                tanStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, tanStelle3, tanStelle4)
-                potencyStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, potencyStelle3, potencyStelle4)
-                absStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, absStelle3, absStelle4)
-                sqrtStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, sqrtStelle3, sqrtStelle4)
-                lnStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, lnStelle3, lnStelle4)
-                logStelle4 = schreibeKlammerninArray(bracketOpen, bracketClose, logStelle3, logStelle4)
+                ePos4 = schreibeKlammerninArray(bracketOpen, bracketClose, ePos3, ePos4)
+                piPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, piPos3, piPos4)
+                sinPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, sinPos3, sinPos4)
+                cosPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, cosPos3, cosPos4)
+                tanPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, tanPos3, tanPos4)
+                potencyPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, potencyPos3, potencyPos4)
+                absPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, absPos3, absPos4)
+                sqrtPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, sqrtPos3, sqrtPos4)
+                lnPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, lnPos3, lnPos4)
+                logPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, logPos3, logPos4)
+                rndPos4 = schreibeKlammerninArray(bracketOpen, bracketClose, rndPos3, rndPos4)
 
-                ReDim Preserve multiStelle4((bracketClose - bracketOpen))
-                ReDim Preserve divideStelle4((bracketClose - bracketOpen))
-                ReDim Preserve plusStelle4((bracketClose - bracketOpen))
-                ReDim Preserve minusStelle4((bracketClose - bracketOpen))
-                ReDim Preserve eingabeZahlen4((bracketClose - bracketOpen))
+                ReDim Preserve multiPos4((bracketClose - bracketOpen))
+                ReDim Preserve dividePos4((bracketClose - bracketOpen))
+                ReDim Preserve plusPos4((bracketClose - bracketOpen))
+                ReDim Preserve minusPos4((bracketClose - bracketOpen))
+                ReDim Preserve entryNumber4((bracketClose - bracketOpen))
                 ReDim Preserve xPosition4((bracketClose - bracketOpen))
-                ReDim Preserve eStelle4((bracketClose - bracketOpen))
-                ReDim Preserve piStelle4((bracketClose - bracketOpen))
-                ReDim Preserve sinStelle4((bracketClose - bracketOpen))
-                ReDim Preserve cosStelle4((bracketClose - bracketOpen))
-                ReDim Preserve tanStelle4((bracketClose - bracketOpen))
-                ReDim Preserve potencyStelle4((bracketClose - bracketOpen))
-                ReDim Preserve absStelle4((bracketClose - bracketOpen))
-                ReDim Preserve sqrtStelle4((bracketClose - bracketOpen))
-                ReDim Preserve lnStelle4((bracketClose - bracketOpen))
-                ReDim Preserve logStelle4((bracketClose - bracketOpen))
-
-
-                'TODO: special expression in brackets
+                ReDim Preserve ePos4((bracketClose - bracketOpen))
+                ReDim Preserve piPos4((bracketClose - bracketOpen))
+                ReDim Preserve sinPos4((bracketClose - bracketOpen))
+                ReDim Preserve cosPos4((bracketClose - bracketOpen))
+                ReDim Preserve tanPos4((bracketClose - bracketOpen))
+                ReDim Preserve potencyPos4((bracketClose - bracketOpen))
+                ReDim Preserve absPos4((bracketClose - bracketOpen))
+                ReDim Preserve sqrtPos4((bracketClose - bracketOpen))
+                ReDim Preserve lnPos4((bracketClose - bracketOpen))
+                ReDim Preserve logPos4((bracketClose - bracketOpen))
+                ReDim Preserve rndPos4((bracketClose - bracketOpen))
 
                 'calculate bracket content
-                eingabeZahlen3(bracketOpen) = berechneBrackets()
+                entryNumber3(bracketOpen) = berechneBrackets()
 
 
-
-
-                eingabeZahlen3 = removeRestBracket(bracketOpen, bracketClose, eingabeZahlen3)
-                multiStelle3 = removeRestBracket(bracketOpen, bracketClose, multiStelle3)
-                divideStelle3 = removeRestBracket(bracketOpen, bracketClose, divideStelle3)
-                plusStelle3 = removeRestBracket(bracketOpen, bracketClose, plusStelle3)
-                minusStelle3 = removeRestBracket(bracketOpen, bracketClose, minusStelle3)
+                entryNumber3 = removeRestBracket(bracketOpen, bracketClose, entryNumber3)
+                multiPos3 = removeRestBracket(bracketOpen, bracketClose, multiPos3)
+                dividePos3 = removeRestBracket(bracketOpen, bracketClose, dividePos3)
+                plusPos3 = removeRestBracket(bracketOpen, bracketClose, plusPos3)
+                minusPos3 = removeRestBracket(bracketOpen, bracketClose, minusPos3)
                 xPosition3 = removeRestBracket(bracketOpen, bracketClose, xPosition3)
-                eStelle3 = removeRestBracket(bracketOpen, bracketClose, eStelle3)
-                piStelle3 = removeRestBracket(bracketOpen, bracketClose, piStelle3)
-                sinStelle3 = removeRestBracket(bracketOpen, bracketClose, sinStelle3)
-                cosStelle3 = removeRestBracket(bracketOpen, bracketClose, cosStelle3)
-                tanStelle3 = removeRestBracket(bracketOpen, bracketClose, tanStelle3)
-                potencyStelle3 = removeRestBracket(bracketOpen, bracketClose, potencyStelle3)
-                absStelle3 = removeRestBracket(bracketOpen, bracketClose, absStelle3)
-                sqrtStelle3 = removeRestBracket(bracketOpen, bracketClose, sqrtStelle3)
-                lnStelle3 = removeRestBracket(bracketOpen, bracketClose, lnStelle3)
-                logStelle3 = removeRestBracket(bracketOpen, bracketClose, logStelle3)
-                openBracketStelle3 = removeRestBracket(bracketOpen, bracketClose, openBracketStelle3)
-                closeBracketStelle3 = removeRestBracket(bracketOpen, bracketClose, closeBracketStelle3)
+                ePos3 = removeRestBracket(bracketOpen, bracketClose, ePos3)
+                piPos3 = removeRestBracket(bracketOpen, bracketClose, piPos3)
+                sinPos3 = removeRestBracket(bracketOpen, bracketClose, sinPos3)
+                cosPos3 = removeRestBracket(bracketOpen, bracketClose, cosPos3)
+                tanPos3 = removeRestBracket(bracketOpen, bracketClose, tanPos3)
+                potencyPos3 = removeRestBracket(bracketOpen, bracketClose, potencyPos3)
+                absPos3 = removeRestBracket(bracketOpen, bracketClose, absPos3)
+                sqrtPos3 = removeRestBracket(bracketOpen, bracketClose, sqrtPos3)
+                lnPos3 = removeRestBracket(bracketOpen, bracketClose, lnPos3)
+                logPos3 = removeRestBracket(bracketOpen, bracketClose, logPos3)
+                rndPos3 = removeRestBracket(bracketOpen, bracketClose, rndPos3)
+                openBracketPos3 = removeRestBracket(bracketOpen, bracketClose, openBracketPos3)
+                closeBracketPos3 = removeRestBracket(bracketOpen, bracketClose, closeBracketPos3)
 
 
-                ReDim Preserve eingabeZahlen3(eingabeZahlen3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve multiStelle3(multiStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve divideStelle3(divideStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve plusStelle3(plusStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve minusStelle3(minusStelle3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve entryNumber3(entryNumber3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve multiPos3(multiPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve dividePos3(dividePos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve plusPos3(plusPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve minusPos3(minusPos3.Length - 1 - (bracketClose - bracketOpen))
                 ReDim Preserve xPosition3(xPosition3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve eStelle3(eStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve piStelle3(piStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve sinStelle3(sinStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve cosStelle3(cosStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve tanStelle3(tanStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve potencyStelle3(potencyStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve absStelle3(absStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve sqrtStelle3(sqrtStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve lnStelle3(lnStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve logStelle3(logStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve openBracketStelle3(openBracketStelle3.Length - 1 - (bracketClose - bracketOpen))
-                ReDim Preserve closeBracketStelle3(closeBracketStelle3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve ePos3(ePos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve piPos3(piPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve sinPos3(sinPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve cosPos3(cosPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve tanPos3(tanPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve potencyPos3(potencyPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve absPos3(absPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve sqrtPos3(sqrtPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve lnPos3(lnPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve logPos3(logPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve rndPos3(rndPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve openBracketPos3(openBracketPos3.Length - 1 - (bracketClose - bracketOpen))
+                ReDim Preserve closeBracketPos3(closeBracketPos3.Length - 1 - (bracketClose - bracketOpen))
 
-                openBracketStelle3(bracketOpen) = False
+                openBracketPos3(bracketOpen) = False
             End If
 
-            replaceSpecials()
+
+            replaceExpressions()
 
             bracketCounter += 1
             bracketOpen = 0
@@ -493,7 +486,6 @@ Public Class Manual
         Return yValue
     End Function
 
-
     Function removeRestBracket(bracketOpen, bracketClose, myArray)
         Dim i
         For i = bracketClose + 1 To myArray.Length - 1
@@ -502,7 +494,6 @@ Public Class Manual
 
         Return myArray
     End Function
-
 
     Function schreibeKlammerninArray(bracketOpen, bracketClose, myArray3, myArray4)
         Dim i
@@ -515,109 +506,201 @@ Public Class Manual
         Return myArray4
     End Function
 
+    Sub bracketExpressions()
+        Dim radian = Module1._radian
 
-    Sub replaceSpecials()
-
-        For j = 0 To eingabeZahlen3.Length - 2
-            If sinStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Sin(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If radian = False Then
+                If sinPos3(j) = True And openBracketPos3(j + 1) = False Then
+                    entryNumber3(j) = Math.Sin((2 * Math.PI / 360) * entryNumber3(j + 1))
+                End If
+            Else
+                If sinPos3(j) = True And openBracketPos3(j + 1) = False Then
+                    entryNumber3(j) = Math.Sin(entryNumber3(j + 1))
+                End If
             End If
         Next j
 
-        For j = 0 To eingabeZahlen3.Length - 2
-            If cosStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Cos(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If radian = False Then
+                If cosPos3(j) = True And openBracketPos3(j + 1) = False Then
+                    entryNumber3(j) = Math.Cos((2 * Math.PI / 360) * entryNumber3(j + 1))
+                End If
+            Else
+                If cosPos3(j) = True And openBracketPos3(j + 1) = False Then
+                    entryNumber3(j) = Math.Cos(entryNumber3(j + 1))
+                End If
             End If
         Next j
 
-        For j = 0 To eingabeZahlen3.Length - 2
-            If tanStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Tan(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If radian = False Then
+                If tanPos3(j) = True And openBracketPos3(j + 1) = False Then
+                    entryNumber3(j) = Math.Tan((2 * Math.PI / 360) * entryNumber3(j + 1))
+                End If
+            Else
+                If tanPos3(j) = True And openBracketPos3(j + 1) = False Then
+                    entryNumber3(j) = Math.Tan(entryNumber3(j + 1))
+                End If
             End If
         Next j
 
-        For j = 0 To eingabeZahlen3.Length - 2
-            If sqrtStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Sqrt(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If sqrtPos3(j) = True And openBracketPos3(j + 1) = False Then
+                entryNumber3(j) = Math.Sqrt(entryNumber3(j + 1))
             End If
         Next j
 
-        For j = 0 To eingabeZahlen3.Length - 2
-            If absStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Abs(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If rndPos3(j) = True And openBracketPos3(j + 1) = False Then
+                entryNumber3(j) = Math.Round(entryNumber3(j + 1))
             End If
         Next j
 
-        For j = 0 To eingabeZahlen3.Length - 2
-            If lnStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Log(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If absPos3(j) = True And openBracketPos3(j + 1) = False Then
+                entryNumber3(j) = Math.Abs(entryNumber3(j + 1))
             End If
         Next j
 
-        For j = 0 To eingabeZahlen3.Length - 2
-            If logStelle3(j) = True And eingabeZahlen3(j + 1) <> Nothing Then
-                eingabeZahlen3(j) = Math.Log10(eingabeZahlen3(j + 1))
+        For j = 0 To entryNumber3.Length - 2
+            If lnPos3(j) = True And openBracketPos3(j + 1) = False Then
+                entryNumber3(j) = Math.Log(entryNumber3(j + 1))
             End If
         Next j
 
+        For j = 0 To entryNumber3.Length - 2
+            If logPos3(j) = True And openBracketPos3(j + 1) = False Then
+                entryNumber3(j) = Math.Log10(entryNumber3(j + 1))
+            End If
+        Next j
+    End Sub
+
+    Sub replaceExpressions()
+        Dim radian = Module1._radian
+
+        For j = 0 To entryNumber3.Length - 2
+            If radian = False Then
+                If sinPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                    entryNumber3(j) = Math.Sin((Math.PI / 180) * entryNumber3(j + 1))
+                End If
+            Else
+                If sinPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                    entryNumber3(j) = Math.Sin(entryNumber3(j + 1))
+                End If
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If radian = False Then
+                If cosPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                    entryNumber3(j) = Math.Cos((Math.PI / 180) * entryNumber3(j + 1))
+                End If
+            Else
+                If cosPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                    entryNumber3(j) = Math.Cos(entryNumber3(j + 1))
+                End If
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If radian = False Then
+                If tanPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                    entryNumber3(j) = Math.Tan((Math.PI / 180) * entryNumber3(j + 1))
+                End If
+            Else
+                If tanPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                    entryNumber3(j) = Math.Tan(entryNumber3(j + 1))
+                End If
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If sqrtPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                entryNumber3(j) = Math.Sqrt(entryNumber3(j + 1))
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If rndPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                entryNumber3(j) = Math.Round(entryNumber3(j + 1))
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If absPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                entryNumber3(j) = Math.Abs(entryNumber3(j + 1))
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If lnPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                entryNumber3(j) = Math.Log(entryNumber3(j + 1))
+            End If
+        Next j
+
+        For j = 0 To entryNumber3.Length - 2
+            If logPos3(j) = True And entryNumber3(j + 1) <> Nothing Then
+                entryNumber3(j) = Math.Log10(entryNumber3(j + 1))
+            End If
+        Next j
     End Sub
 
     Sub copyArrays(i)
         Dim j
 
         For j = 0 To (i - 1)
-            eingabeZahlen3(j) = eingabeZahlen3(j)
-            multiStelle3(j) = multiStelle3(j)
-            divideStelle3(j) = divideStelle3(j)
-            plusStelle3(j) = plusStelle3(j)
-            minusStelle3(j) = minusStelle3(j)
-            potencyStelle3(j) = potencyStelle3(j)
+            entryNumber3(j) = entryNumber3(j)
+            multiPos3(j) = multiPos3(j)
+            dividePos3(j) = dividePos3(j)
+            plusPos3(j) = plusPos3(j)
+            minusPos3(j) = minusPos3(j)
+            potencyPos3(j) = potencyPos3(j)
         Next j
-        For j = (i + 2) To eingabeZahlen3.Length - 1
-            eingabeZahlen3(j - 2) = eingabeZahlen3(j)
-            multiStelle3(j - 2) = multiStelle3(j)
-            divideStelle3(j - 2) = divideStelle3(j)
-            plusStelle3(j - 2) = plusStelle3(j)
-            minusStelle3(j - 2) = minusStelle3(j)
-            potencyStelle3(j - 2) = potencyStelle3(j)
+        For j = (i + 2) To entryNumber3.Length - 1
+            entryNumber3(j - 2) = entryNumber3(j)
+            multiPos3(j - 2) = multiPos3(j)
+            dividePos3(j - 2) = dividePos3(j)
+            plusPos3(j - 2) = plusPos3(j)
+            minusPos3(j - 2) = minusPos3(j)
+            potencyPos3(j - 2) = potencyPos3(j)
         Next j
 
-        ReDim Preserve multiStelle3(multiStelle3.Length - 3)
-        ReDim Preserve divideStelle3(divideStelle3.Length - 3)
-        ReDim Preserve plusStelle3(plusStelle3.Length - 3)
-        ReDim Preserve minusStelle3(minusStelle3.Length - 3)
-        ReDim Preserve eingabeZahlen3(eingabeZahlen3.Length - 3)
-        ReDim Preserve potencyStelle3(potencyStelle3.Length - 3)
+        ReDim Preserve multiPos3(multiPos3.Length - 3)
+        ReDim Preserve dividePos3(dividePos3.Length - 3)
+        ReDim Preserve plusPos3(plusPos3.Length - 3)
+        ReDim Preserve minusPos3(minusPos3.Length - 3)
+        ReDim Preserve entryNumber3(entryNumber3.Length - 3)
+        ReDim Preserve potencyPos3(potencyPos3.Length - 3)
     End Sub
 
     Sub copyBracketArrays(i)
         Dim j
 
         For j = 0 To (i - 1)
-            eingabeZahlen4(j) = eingabeZahlen4(j)
-            multiStelle4(j) = multiStelle4(j)
-            divideStelle4(j) = divideStelle4(j)
-            plusStelle4(j) = plusStelle4(j)
-            minusStelle4(j) = minusStelle4(j)
-            potencyStelle4(j) = potencyStelle4(j)
+            entryNumber4(j) = entryNumber4(j)
+            multiPos4(j) = multiPos4(j)
+            dividePos4(j) = dividePos4(j)
+            plusPos4(j) = plusPos4(j)
+            minusPos4(j) = minusPos4(j)
+            potencyPos4(j) = potencyPos4(j)
         Next j
-        For j = (i + 2) To eingabeZahlen4.Length - 1
-            eingabeZahlen4(j - 2) = eingabeZahlen4(j)
-            multiStelle4(j - 2) = multiStelle4(j)
-            divideStelle4(j - 2) = divideStelle4(j)
-            plusStelle4(j - 2) = plusStelle4(j)
-            minusStelle4(j - 2) = minusStelle4(j)
-            potencyStelle4(j - 2) = potencyStelle4(j)
+        For j = (i + 2) To entryNumber4.Length - 1
+            entryNumber4(j - 2) = entryNumber4(j)
+            multiPos4(j - 2) = multiPos4(j)
+            dividePos4(j - 2) = dividePos4(j)
+            plusPos4(j - 2) = plusPos4(j)
+            minusPos4(j - 2) = minusPos4(j)
+            potencyPos4(j - 2) = potencyPos4(j)
         Next j
 
-        ReDim Preserve multiStelle4(multiStelle4.Length - 3)
-        ReDim Preserve divideStelle4(divideStelle4.Length - 3)
-        ReDim Preserve plusStelle4(plusStelle4.Length - 3)
-        ReDim Preserve minusStelle4(minusStelle4.Length - 3)
-        ReDim Preserve eingabeZahlen4(eingabeZahlen4.Length - 3)
-        ReDim Preserve potencyStelle4(potencyStelle4.Length - 3)
+        ReDim Preserve multiPos4(multiPos4.Length - 3)
+        ReDim Preserve dividePos4(dividePos4.Length - 3)
+        ReDim Preserve plusPos4(plusPos4.Length - 3)
+        ReDim Preserve minusPos4(minusPos4.Length - 3)
+        ReDim Preserve entryNumber4(entryNumber4.Length - 3)
+        ReDim Preserve potencyPos4(potencyPos4.Length - 3)
     End Sub
-
 
     Private Sub drawFunction(xValue, yValue)
 
@@ -627,39 +710,38 @@ Public Class Manual
 
         xOld = xPixel
         yOld = yValue
-
     End Sub
 
     Function berechneBrackets()
         Dim ergebnis As Double
 Line4:
         Dim i
-        For i = 0 To eingabeZahlen4.Length - 1
-            If potencyStelle4(i) = True Then
+        For i = 0 To entryNumber4.Length - 1
+            If potencyPos4(i) = True Then
 
-                ergebnis = Math.Pow(eingabeZahlen4(i - 1), eingabeZahlen4(i + 1))
-                eingabeZahlen4(i - 1) = ergebnis
+                ergebnis = Math.Pow(entryNumber4(i - 1), entryNumber4(i + 1))
+                entryNumber4(i - 1) = ergebnis
                 copyBracketArrays(i)
                 GoTo Line4
             End If
         Next i
 
 Line1:
-        For i = 0 To eingabeZahlen4.Length - 1
-            If multiStelle4(i) = True Then
+        For i = 0 To entryNumber4.Length - 1
+            If multiPos4(i) = True Then
                 Try
-                    ergebnis = eingabeZahlen4(i - 1) * eingabeZahlen4(i + 1)
-                    eingabeZahlen4(i - 1) = ergebnis
+                    ergebnis = entryNumber4(i - 1) * entryNumber4(i + 1)
+                    entryNumber4(i - 1) = ergebnis
                     copyBracketArrays(i)
                     GoTo Line1
                 Catch
                     MsgBox("An unknown error was found")
                     Me.Close()
                 End Try
-            ElseIf divideStelle4(i) = True Then
+            ElseIf dividePos4(i) = True Then
                 Try
-                    ergebnis = eingabeZahlen4(i - 1) / eingabeZahlen4(i + 1)
-                    eingabeZahlen4(i - 1) = ergebnis
+                    ergebnis = entryNumber4(i - 1) / entryNumber4(i + 1)
+                    entryNumber4(i - 1) = ergebnis
                     copyBracketArrays(i)
                     GoTo Line1
                 Catch
@@ -670,18 +752,18 @@ Line1:
         Next i
 
 
-        ergebnis = eingabeZahlen4(1)
-        For i = 0 To eingabeZahlen4.Length - 1
-            If plusStelle4(i) = True Then
+        ergebnis = entryNumber4(1)
+        For i = 0 To entryNumber4.Length - 1
+            If plusPos4(i) = True Then
                 Try
-                    ergebnis += eingabeZahlen4(i + 1)
+                    ergebnis += entryNumber4(i + 1)
                 Catch
                     MsgBox("An unknown error was found")
                     Me.Close()
                 End Try
-            ElseIf minusStelle4(i) = True Then
+            ElseIf minusPos4(i) = True Then
                 Try
-                    ergebnis -= eingabeZahlen4(i + 1)
+                    ergebnis -= entryNumber4(i + 1)
                 Catch
                     MsgBox("An unknown error was found")
                     Me.Close()
@@ -692,16 +774,15 @@ Line1:
         Return ergebnis
     End Function
 
-
     Function berechneTerm()
         Dim ergebnis As Double
         Dim i
 
 Line3:
-        For i = 0 To eingabeZahlen3.Length - 1
-            If potencyStelle3(i) = True Then
-                ergebnis = Math.Pow(eingabeZahlen3(i - 1), eingabeZahlen3(i + 1))
-                eingabeZahlen3(i - 1) = ergebnis
+        For i = 0 To entryNumber3.Length - 1
+            If potencyPos3(i) = True Then
+                ergebnis = Math.Pow(entryNumber3(i - 1), entryNumber3(i + 1))
+                entryNumber3(i - 1) = ergebnis
                 copyArrays(i)
                 GoTo Line3
             End If
@@ -710,32 +791,32 @@ Line3:
 
 Line2:
 
-        For i = 0 To eingabeZahlen3.Length - 1
-            If multiStelle3(i) = True Then
-                ergebnis = eingabeZahlen3(i - 1) * eingabeZahlen3(i + 1)
-                eingabeZahlen3(i - 1) = ergebnis
+        For i = 0 To entryNumber3.Length - 1
+            If multiPos3(i) = True Then
+                ergebnis = entryNumber3(i - 1) * entryNumber3(i + 1)
+                entryNumber3(i - 1) = ergebnis
                 copyArrays(i)
                 GoTo Line2
-            ElseIf divideStelle3(i) = True Then
+            ElseIf dividePos3(i) = True Then
 
-                ergebnis = eingabeZahlen3(i - 1) / eingabeZahlen3(i + 1)
-                eingabeZahlen3(i - 1) = ergebnis
+                ergebnis = entryNumber3(i - 1) / entryNumber3(i + 1)
+                entryNumber3(i - 1) = ergebnis
                 copyArrays(i)
                 GoTo Line2
             End If
         Next i
 
 
-        ergebnis = eingabeZahlen3(1)
+        ergebnis = entryNumber3(1)
 
-        For i = 0 To eingabeZahlen3.Length - 1
-            If plusStelle3(i) = True Then
+        For i = 0 To entryNumber3.Length - 1
+            If plusPos3(i) = True Then
 
-                ergebnis += eingabeZahlen3(i + 1)
+                ergebnis += entryNumber3(i + 1)
 
-            ElseIf minusStelle3(i) = True Then
+            ElseIf minusPos3(i) = True Then
 
-                ergebnis -= eingabeZahlen3(i + 1)
+                ergebnis -= entryNumber3(i + 1)
 
             End If
         Next i
@@ -743,6 +824,4 @@ Line2:
 
         Return ergebnis
     End Function
-
-
 End Class

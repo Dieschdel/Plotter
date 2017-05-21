@@ -28,7 +28,7 @@ Partial Class Eingabe
         Me.backButton = New System.Windows.Forms.Button()
         Me.eButton = New System.Windows.Forms.Button()
         Me.piButton = New System.Windows.Forms.Button()
-        Me.plusMinus = New System.Windows.Forms.Button()
+        Me.roundButton = New System.Windows.Forms.Button()
         Me.twoButton = New System.Windows.Forms.Button()
         Me.oneButton = New System.Windows.Forms.Button()
         Me.fourButton = New System.Windows.Forms.Button()
@@ -56,10 +56,10 @@ Partial Class Eingabe
         Me.potencyButton = New System.Windows.Forms.Button()
         Me.absButton = New System.Windows.Forms.Button()
         Me.displayBox2 = New System.Windows.Forms.TextBox()
-        Me.donothingButton = New System.Windows.Forms.Button()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.radianButton = New System.Windows.Forms.Button()
         Me.donateButton = New System.Windows.Forms.Button()
         Me.mcButton = New System.Windows.Forms.Button()
+        Me.keepGraphCheck = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'threeButton
@@ -84,13 +84,11 @@ Partial Class Eingabe
         '
         'backButton
         '
-        Me.backButton.Enabled = False
         Me.backButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.backButton.Location = New System.Drawing.Point(148, 225)
         Me.backButton.Name = "backButton"
         Me.backButton.Size = New System.Drawing.Size(40, 40)
         Me.backButton.TabIndex = 2
-        Me.backButton.Text = "←"
         Me.backButton.UseVisualStyleBackColor = True
         '
         'eButton
@@ -111,15 +109,14 @@ Partial Class Eingabe
         Me.piButton.Text = "π"
         Me.piButton.UseVisualStyleBackColor = True
         '
-        'plusMinus
+        'roundButton
         '
-        Me.plusMinus.Enabled = False
-        Me.plusMinus.Location = New System.Drawing.Point(56, 225)
-        Me.plusMinus.Name = "plusMinus"
-        Me.plusMinus.Size = New System.Drawing.Size(40, 40)
-        Me.plusMinus.TabIndex = 5
-        Me.plusMinus.Text = "±"
-        Me.plusMinus.UseVisualStyleBackColor = True
+        Me.roundButton.Location = New System.Drawing.Point(56, 225)
+        Me.roundButton.Name = "roundButton"
+        Me.roundButton.Size = New System.Drawing.Size(40, 40)
+        Me.roundButton.TabIndex = 5
+        Me.roundButton.Text = "Rnd"
+        Me.roundButton.UseVisualStyleBackColor = True
         '
         'twoButton
         '
@@ -253,7 +250,6 @@ Partial Class Eingabe
         '
         'commaButton
         '
-        Me.commaButton.Enabled = False
         Me.commaButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.commaButton.Location = New System.Drawing.Point(148, 409)
         Me.commaButton.Name = "commaButton"
@@ -381,22 +377,14 @@ Partial Class Eingabe
         Me.displayBox2.Size = New System.Drawing.Size(221, 93)
         Me.displayBox2.TabIndex = 41
         '
-        'donothingButton
+        'radianButton
         '
-        Me.donothingButton.Location = New System.Drawing.Point(193, 179)
-        Me.donothingButton.Name = "donothingButton"
-        Me.donothingButton.Size = New System.Drawing.Size(40, 40)
-        Me.donothingButton.TabIndex = 42
-        Me.donothingButton.Text = "Rad"
-        Me.donothingButton.UseVisualStyleBackColor = True
-        '
-        'MenuStrip1
-        '
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(259, 24)
-        Me.MenuStrip1.TabIndex = 43
-        Me.MenuStrip1.Text = "MenuStrip1"
+        Me.radianButton.Location = New System.Drawing.Point(193, 179)
+        Me.radianButton.Name = "radianButton"
+        Me.radianButton.Size = New System.Drawing.Size(40, 40)
+        Me.radianButton.TabIndex = 42
+        Me.radianButton.Text = "Rad"
+        Me.radianButton.UseVisualStyleBackColor = True
         '
         'donateButton
         '
@@ -416,6 +404,16 @@ Partial Class Eingabe
         Me.mcButton.TabIndex = 27
         Me.mcButton.UseVisualStyleBackColor = True
         '
+        'keepGraphCheck
+        '
+        Me.keepGraphCheck.AutoSize = True
+        Me.keepGraphCheck.Location = New System.Drawing.Point(12, 7)
+        Me.keepGraphCheck.Name = "keepGraphCheck"
+        Me.keepGraphCheck.Size = New System.Drawing.Size(80, 17)
+        Me.keepGraphCheck.TabIndex = 44
+        Me.keepGraphCheck.Text = "keep graph"
+        Me.keepGraphCheck.UseVisualStyleBackColor = True
+        '
         'Eingabe
         '
         Me.AcceptButton = Me.enterButton
@@ -423,7 +421,8 @@ Partial Class Eingabe
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Control
         Me.ClientSize = New System.Drawing.Size(259, 461)
-        Me.Controls.Add(Me.donothingButton)
+        Me.Controls.Add(Me.keepGraphCheck)
+        Me.Controls.Add(Me.radianButton)
         Me.Controls.Add(Me.displayBox2)
         Me.Controls.Add(Me.absButton)
         Me.Controls.Add(Me.potencyButton)
@@ -453,15 +452,13 @@ Partial Class Eingabe
         Me.Controls.Add(Me.fourButton)
         Me.Controls.Add(Me.oneButton)
         Me.Controls.Add(Me.twoButton)
-        Me.Controls.Add(Me.plusMinus)
+        Me.Controls.Add(Me.roundButton)
         Me.Controls.Add(Me.piButton)
         Me.Controls.Add(Me.eButton)
         Me.Controls.Add(Me.backButton)
         Me.Controls.Add(Me.xButton)
         Me.Controls.Add(Me.threeButton)
-        Me.Controls.Add(Me.MenuStrip1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MainMenuStrip = Me.MenuStrip1
         Me.MaximumSize = New System.Drawing.Size(275, 500)
         Me.MinimumSize = New System.Drawing.Size(275, 500)
         Me.Name = "Eingabe"
@@ -476,7 +473,7 @@ Partial Class Eingabe
     Friend WithEvents backButton As Button
     Friend WithEvents eButton As Button
     Friend WithEvents piButton As Button
-    Friend WithEvents plusMinus As Button
+    Friend WithEvents roundButton As Button
     Friend WithEvents twoButton As Button
     Friend WithEvents oneButton As Button
     Friend WithEvents fourButton As Button
@@ -506,6 +503,6 @@ Partial Class Eingabe
     Friend WithEvents potencyButton As Button
     Friend WithEvents absButton As Button
     Friend WithEvents displayBox2 As TextBox
-    Friend WithEvents donothingButton As Button
-    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents radianButton As Button
+    Friend WithEvents keepGraphCheck As CheckBox
 End Class

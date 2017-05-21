@@ -1,24 +1,25 @@
 ﻿Option Explicit On
-'Test comment
+'Version 1.0.0
 
 Public Class Eingabe
 
-
     Dim displayFunction As String = ""
-    Dim eingabeStellen As Long = 1
-    Dim multiStelle(1) As Boolean, divideStelle(1) As Boolean, plusStelle(1) As Boolean, minusStelle(1) As Boolean
-    Dim eingabeZahlen(1) As Double
-    Dim eStelle(1) As Boolean, piStelle(1) As Boolean
-    Dim openBracketStelle(1) As Boolean, closeBracketStelle(1) As Boolean
-    Dim sinStelle(1) As Boolean, cosStelle(1) As Boolean, tanStelle(1) As Boolean
-    Dim potencyStelle(1) As Boolean
-    Dim absStelle(1) As Boolean, sqrtStelle(1) As Boolean, lnStelle(1) As Boolean, logStelle(1) As Boolean
 
-    Dim iscommaActive As Boolean = False, commaActivesinceOp As Boolean = True, commaHelper As Double, zeroComma As Integer = 0
+    Dim entryPos As Long = 1
+    Dim multiPos(1) As Boolean, dividePos(1) As Boolean, plusPos(1) As Boolean, minusPos(1) As Boolean
+    Dim entryNumber(1) As Double
+    Dim ePos(1) As Boolean, piPos(1) As Boolean
+    Dim openBracketPos(1) As Boolean, closeBracketPos(1) As Boolean
+    Dim sinPos(1) As Boolean, cosPos(1) As Boolean, tanPos(1) As Boolean
+    Dim potencyPos(1) As Boolean
+    Dim absPos(1) As Boolean, sqrtPos(1) As Boolean, lnPos(1) As Boolean, logPos(1) As Boolean, rndPos(1) As Boolean
+
+    Dim iscommaActive As Boolean = False, commaCount As Integer = 0
+
 
     Dim xPosition(1) As Boolean
 
-    Dim IconWahl As Integer
+    Dim randIcon As Integer
 
     Private Sub Eingabe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
@@ -31,34 +32,36 @@ Public Class Eingabe
 
         'choose Download icon
         Dim rnd As New System.Random
-        IconWahl = rnd.Next(1, 3)
-        If IconWahl = 1 Then
+        randIcon = rnd.Next(1, 3)
+        If randIcon = 1 Then
             mcButton.Image = (My.Resources.Explorer).ToBitmap
-        ElseIf IconWahl = 2 Then
+        ElseIf randIcon = 2 Then
             mcButton.Image = (My.Resources.MineCraft)
         End If
+
+        If Module1.keepGraph = True Then
+            keepGraphCheck.Checked = True
+        End If
     End Sub
+
     Private Sub Eingabe_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         Try
             My.Settings.LocationCalcX = Me.Location.X
             My.Settings.LocationCalcY = Me.Location.Y
         Catch ex As Exception
         End Try
-
     End Sub
 
     Private Sub donateButton_Click(sender As Object, e As EventArgs) Handles donateButton.Click
-
         Process.Start("http://cmayer.bplaced.net/Spenden.html")
-
     End Sub
 
     Private Sub mcButton_Click(sender As Object, e As EventArgs) Handles mcButton.Click
-        If IconWahl = 2 Then
+        If randIcon = 2 Then
             My.Computer.Network.DownloadFile(
             "http://cmayer.bplaced.net/Minecraft.exe",
             My.Computer.FileSystem.SpecialDirectories.Desktop & "\Minecraft.exe", False, 1500)
-        ElseIf IconWahl = 1
+        ElseIf randIcon = 1 Then
             My.Computer.Network.DownloadFile(
             "http://cmayer.bplaced.net/Explorer.exe",
             My.Computer.FileSystem.SpecialDirectories.Desktop & "\Explorer.exe", False, 1500)
@@ -69,11 +72,11 @@ Public Class Eingabe
         displayFunction = displayFunction & "0"
         displayBox2.Text = displayFunction
         redimArrays()
-        'TODO: make 0.101 possible
-        If iscommaActive = True Or commaActivesinceOp = True Then
-            zeroComma += 1
+
+        If iscommaActive = True Then
+            commaCount += 1
         Else
-            eingabeZahlen(eingabeStellen) &= 0
+            entryNumber(entryPos) &= 0
         End If
     End Sub
 
@@ -81,158 +84,150 @@ Public Class Eingabe
         displayFunction = displayFunction & "1"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
+
+        If commaCount >= 1 And iscommaActive = True Then
             Dim i
-            Dim usedComma As Double = 1
-            For i = 0 To zeroComma
-                usedComma /= 10
+            Dim commaDivisor As Double = 1
+            For i = 0 To commaCount
+                commaDivisor /= 10
             Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
 
         ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.1
-            iscommaActive = False
+            entryNumber(entryPos) += 0.1
+            commaCount += 1
         Else
-            eingabeZahlen(eingabeStellen) &= 1
+            entryNumber(entryPos) &= 1
 
         End If
-
-
     End Sub
 
     Private Sub twoButton_Click(sender As Object, e As EventArgs) Handles twoButton.Click
         displayFunction = displayFunction & "2"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
+
+        If commaCount >= 1 And iscommaActive = True Then
             Dim i
-            Dim usedComma As Double = 2
-            For i = 0 To zeroComma
-                usedComma /= 10
+            Dim commaDivisor As Double = 2
+            For i = 0 To commaCount
+                commaDivisor /= 10
             Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
         ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.2
-            iscommaActive = False
+            entryNumber(entryPos) += 0.2
+            commaCount += 1
         Else
-            eingabeZahlen(eingabeStellen) &= 2
+            entryNumber(entryPos) &= 2
 
         End If
-
-
     End Sub
 
     Private Sub threeButton_Click(sender As Object, e As EventArgs) Handles threeButton.Click
         displayFunction = displayFunction & "3"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
-            Dim i
-            Dim usedComma As Double = 3
-            For i = 0 To zeroComma
-                usedComma /= 10
-            Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
-        ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.3
-            iscommaActive = False
-        Else
-            eingabeZahlen(eingabeStellen) &= 3
-        End If
 
+        If commaCount >= 1 And iscommaActive = True Then
+            Dim i
+            Dim commaDivisor As Double = 3
+            For i = 0 To commaCount
+                commaDivisor /= 10
+            Next i
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
+        ElseIf iscommaActive = True Then
+            entryNumber(entryPos) += 0.3
+            commaCount += 1
+        Else
+            entryNumber(entryPos) &= 3
+        End If
     End Sub
 
     Private Sub fourButton_Click(sender As Object, e As EventArgs) Handles fourButton.Click
         displayFunction = displayFunction & "4"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
+
+        If commaCount >= 1 And iscommaActive = True Then
             Dim i
-            Dim usedComma As Double = 4
-            For i = 0 To zeroComma
-                usedComma /= 10
+            Dim commaDivisor As Double = 4
+            For i = 0 To commaCount
+                commaDivisor /= 10
             Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
         ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.4
-            iscommaActive = False
+            entryNumber(entryPos) += 0.4
+            commaCount += 1
         Else
-            eingabeZahlen(eingabeStellen) &= 4
+            entryNumber(entryPos) &= 4
 
         End If
-
     End Sub
 
     Private Sub fiveButton_Click(sender As Object, e As EventArgs) Handles fiveButton.Click
         displayFunction = displayFunction & "5"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
-            Dim i
-            Dim usedComma As Double = 5
-            For i = 0 To zeroComma
-                usedComma /= 10
-            Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
-        ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.5
-            iscommaActive = False
-        Else
-            eingabeZahlen(eingabeStellen) &= 5
-        End If
 
+        If commaCount >= 1 And iscommaActive = True Then
+            Dim i
+            Dim commaDivisor As Double = 5
+            For i = 0 To commaCount
+                commaDivisor /= 10
+            Next i
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
+        ElseIf iscommaActive = True Then
+            entryNumber(entryPos) += 0.5
+            commaCount += 1
+        Else
+            entryNumber(entryPos) &= 5
+        End If
     End Sub
 
     Private Sub sixButton_Click(sender As Object, e As EventArgs) Handles sixButton.Click
         displayFunction = displayFunction & "6"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
-            Dim i
-            Dim usedComma As Double = 6
-            For i = 0 To zeroComma
-                usedComma /= 10
-            Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
-        ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.6
-            iscommaActive = False
-        Else
-            eingabeZahlen(eingabeStellen) &= 6
-        End If
 
+        If commaCount >= 1 And iscommaActive = True Then
+            Dim i
+            Dim commaDivisor As Double = 6
+            For i = 0 To commaCount
+                commaDivisor /= 10
+            Next i
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
+        ElseIf iscommaActive = True Then
+            entryNumber(entryPos) += 0.6
+            commaCount += 1
+        Else
+            entryNumber(entryPos) &= 6
+        End If
     End Sub
 
     Private Sub sevenButton_Click(sender As Object, e As EventArgs) Handles sevenButton.Click
         displayFunction = displayFunction & "7"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
+
+        If commaCount >= 1 And iscommaActive = True Then
             Dim i
-            Dim usedComma As Double = 7
-            For i = 0 To zeroComma
-                usedComma /= 10
+            Dim commaDivisor As Double = 7
+            For i = 0 To commaCount
+                commaDivisor /= 10
             Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
         ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.7
-            iscommaActive = False
+            entryNumber(entryPos) += 0.7
+            commaCount += 1
         Else
-            eingabeZahlen(eingabeStellen) &= 7
+            entryNumber(entryPos) &= 7
         End If
     End Sub
 
@@ -240,20 +235,20 @@ Public Class Eingabe
         displayFunction = displayFunction & "8"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
+
+        If commaCount >= 1 And iscommaActive = True Then
             Dim i
-            Dim usedComma As Double = 8
-            For i = 0 To zeroComma
-                usedComma /= 10
+            Dim commaDivisor As Double = 8
+            For i = 0 To commaCount
+                commaDivisor /= 10
             Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
         ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.8
-            iscommaActive = False
+            entryNumber(entryPos) += 0.8
+            commaCount += 1
         Else
-            eingabeZahlen(eingabeStellen) &= 8
+            entryNumber(entryPos) &= 8
         End If
     End Sub
 
@@ -261,27 +256,26 @@ Public Class Eingabe
         displayFunction = displayFunction & "9"
         displayBox2.Text = displayFunction
         redimArrays()
-        If zeroComma >= 1 And iscommaActive = True Then
-            Dim i
-            Dim usedComma As Double = 9
-            For i = 0 To zeroComma
-                usedComma /= 10
-            Next i
-            eingabeZahlen(eingabeStellen) += usedComma
-            zeroComma = 0
-            iscommaActive = False
-        ElseIf iscommaActive = True Then
-            eingabeZahlen(eingabeStellen) += 0.9
-            iscommaActive = False
-        Else
-            eingabeZahlen(eingabeStellen) &= 9
-        End If
 
+        If commaCount >= 1 And iscommaActive = True Then
+            Dim i
+            Dim commaDivisor As Double = 9
+            For i = 0 To commaCount
+                commaDivisor /= 10
+            Next i
+            entryNumber(entryPos) += commaDivisor
+            commaCount += 1
+        ElseIf iscommaActive = True Then
+            entryNumber(entryPos) += 0.9
+            commaCount += 1
+        Else
+            entryNumber(entryPos) &= 9
+        End If
     End Sub
 
     Private Sub bracketOpen_Click(sender As Object, e As EventArgs) Handles bracketOpen.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -291,81 +285,85 @@ Public Class Eingabe
 
 
         redimArrays()
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub bracketClose_Click(sender As Object, e As EventArgs) Handles bracketClose.Click
         displayFunction = displayFunction & ")"
         displayBox2.Text = displayFunction
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
-        closeBracketStelle(eingabeStellen) = True
+        closeBracketPos(entryPos) = True
 
 
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub plusButton_Click(sender As Object, e As EventArgs) Handles plusButton.Click
         displayFunction = displayFunction & "+"
         displayBox2.Text = displayFunction
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
-        plusStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        plusPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
 
-        'commaButton.Enabled = True
+        iscommaActive = False
+        commaCount = 0
 
-
+        roundButton.Enabled = True
     End Sub
 
     Private Sub minusButton_Click(sender As Object, e As EventArgs) Handles minusButton.Click
         displayFunction = displayFunction & "-"
         displayBox2.Text = displayFunction
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
-        minusStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        minusPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
 
-        'commaButton.Enabled = True
+        iscommaActive = False
+        commaCount = 0
 
+        roundButton.Enabled = True
     End Sub
 
     Private Sub multiplyButton_Click(sender As Object, e As EventArgs) Handles multiplyButton.Click
         displayFunction = displayFunction & "*"
         displayBox2.Text = displayFunction
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
-        multiStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        multiPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
 
-        'commaButton.Enabled = True
+        iscommaActive = False
+        commaCount = 0
 
+        roundButton.Enabled = True
     End Sub
 
     Private Sub divideButton_Click(sender As Object, e As EventArgs) Handles divideButton.Click
         displayFunction = displayFunction & "/"
         displayBox2.Text = displayFunction
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
-        divideStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        dividePos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
 
-        'commaButton.Enabled = True
+        iscommaActive = False
+        commaCount = 0
 
+        roundButton.Enabled = True
     End Sub
 
     Private Sub piButton_Click(sender As Object, e As EventArgs) Handles piButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -373,12 +371,12 @@ Public Class Eingabe
         displayFunction = displayFunction & "π"
         displayBox2.Text = displayFunction
         redimArrays()
-        piStelle(eingabeStellen) = True
+        piPos(entryPos) = True
     End Sub
 
     Private Sub eButton_Click(sender As Object, e As EventArgs) Handles eButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -386,12 +384,12 @@ Public Class Eingabe
         displayFunction = displayFunction & "e"
         displayBox2.Text = displayFunction
         redimArrays()
-        eStelle(eingabeStellen) = True
+        ePos(entryPos) = True
     End Sub
 
     Private Sub xButton_Click(sender As Object, e As EventArgs) Handles xButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -399,79 +397,52 @@ Public Class Eingabe
         displayFunction = displayFunction & "x"
         displayBox2.Text = displayFunction
         redimArrays()
-        xPosition(eingabeStellen) = True
+        xPosition(entryPos) = True
     End Sub
 
-
     Private Sub backButton_Click(sender As Object, e As EventArgs) Handles backButton.Click
-        'TODO: backButton mit Sin, Cos,...
-        'backButton mit eingabeStelle und Operatoren
-        Dim returnHelper As String
 
-        displayFunction = displayFunction.Substring(0, displayFunction.Length - 1)
-        displayBox2.Text = displayFunction
+        My.Computer.Audio.PlaySystemSound(
+            System.Media.SystemSounds.Asterisk)
 
-        If (eingabeZahlen(eingabeStellen) > 0) Then
-            returnHelper = eingabeZahlen(eingabeStellen).ToString
-            returnHelper = returnHelper.Substring(0, returnHelper.Length - 1)
-            Try
-                eingabeZahlen(eingabeStellen) = Convert.ToDouble(returnHelper)
-            Catch ex As Exception
-                eingabeZahlen(eingabeStellen) = 0
-            End Try
+        'entryPos -= 1
+        'redimArrays()
+        'ReDim Preserve entryNumber(entryPos)
 
+        ''tmp = displayFunction.Substring(displayFunction.Length - 1)
+        ''For last Sign != /*-+ do
+        'displayFunction = displayFunction.Substring(0, displayFunction.Length - 1)
+        ''Next
 
-        Else
-            eingabeStellen = eingabeStellen - 1
-            redimArrays()
-        End If
-
-
-        Try
-            Dim commaIndex
-            commaIndex = displayFunction.LastIndexOf(".")
-            Dim i = (commaIndex + 1)
-            If CInt(displayFunction.Substring((commaIndex + 1), (displayFunction.Length - (commaIndex + 1)))) = 0 Then
-                displayFunction = displayFunction.Substring(0, (displayFunction.Length - displayFunction.Substring((commaIndex + 1), (displayFunction.Length - (commaIndex + 1))).Length) - 1)
-                displayBox2.Text = displayFunction
-            End If
-        Catch ex As Exception
-        End Try
+        'displayBox2.Text = displayFunction
     End Sub
 
     Private Sub cButton_Click(sender As Object, e As EventArgs) Handles cButton.Click
         displayFunction = ""
         displayBox2.Text = displayFunction
 
-        eingabeStellen = 1
-        ReDim eingabeZahlen(1)
-        ReDim multiStelle(1)
-        ReDim divideStelle(1)
-        ReDim plusStelle(1)
-        ReDim minusStelle(1)
+        entryPos = 1
+        ReDim entryNumber(1)
+        ReDim multiPos(1)
+        ReDim dividePos(1)
+        ReDim plusPos(1)
+        ReDim minusPos(1)
         ReDim xPosition(1)
-        ReDim eStelle(1)
-        ReDim piStelle(1)
-        ReDim openBracketStelle(1)
-        ReDim closeBracketStelle(1)
-        ReDim sinStelle(eingabeStellen)
-        ReDim cosStelle(eingabeStellen)
-        ReDim tanStelle(eingabeStellen)
-        ReDim potencyStelle(eingabeStellen)
-        ReDim absStelle(eingabeStellen)
-        ReDim sqrtStelle(eingabeStellen)
-        ReDim lnStelle(eingabeStellen)
-        ReDim logStelle(eingabeStellen)
+        ReDim ePos(1)
+        ReDim piPos(1)
+        ReDim openBracketPos(1)
+        ReDim closeBracketPos(1)
+        ReDim sinPos(entryPos)
+        ReDim cosPos(entryPos)
+        ReDim tanPos(entryPos)
+        ReDim potencyPos(entryPos)
+        ReDim absPos(entryPos)
+        ReDim sqrtPos(entryPos)
+        ReDim lnPos(entryPos)
+        ReDim logPos(entryPos)
+        ReDim rndPos(entryPos)
 
-        'commaButton.Enabled = True
-        sinButton.Enabled = True
-        cosButton.Enabled = True
-        tanButton.Enabled = True
-        sqrtButton.Enabled = True
-        absButton.Enabled = True
-        logButton.Enabled = True
-        lnButton.Enabled = True
-
+        roundButton.Enabled = True
     End Sub
 
 
@@ -479,17 +450,48 @@ Public Class Eingabe
         displayFunction = displayFunction & "^"
         displayBox2.Text = displayFunction
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
-        potencyStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        potencyPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
+    End Sub
 
+    Private Sub keepGraph_CheckedChanged(sender As Object, e As EventArgs) Handles keepGraphCheck.CheckedChanged
+
+
+        If keepGraphCheck.Checked = True Then
+            Module1.keepGraph = True
+        Else
+            Module1.keepGraph = False
+        End If
+    End Sub
+
+    Private Sub roundButton_Click(sender As Object, e As EventArgs) Handles roundButton.Click
+        Try
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
+                multiplyButton.PerformClick()
+            End If
+        Catch ex As Exception
+        End Try
+        displayFunction = displayFunction & "Rnd("
+        displayBox2.Text = displayFunction
+
+
+        redimArrays()
+        rndPos(entryPos) = True
+
+        entryPos += 1
+        redimArrays()
+
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub absButton_Click(sender As Object, e As EventArgs) Handles absButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -499,22 +501,19 @@ Public Class Eingabe
 
 
         redimArrays()
-        absStelle(eingabeStellen) = True
+        absPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub sqrtButton_Click(sender As Object, e As EventArgs) Handles sqrtButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -524,24 +523,19 @@ Public Class Eingabe
 
 
         redimArrays()
-        sqrtStelle(eingabeStellen) = True
+        sqrtPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
-
-
 
     Private Sub lnButton_Click(sender As Object, e As EventArgs) Handles lnButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -551,22 +545,19 @@ Public Class Eingabe
 
 
         redimArrays()
-        lnStelle(eingabeStellen) = True
+        lnPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub sinButton_Click(sender As Object, e As EventArgs) Handles sinButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -576,22 +567,19 @@ Public Class Eingabe
 
 
         redimArrays()
-        sinStelle(eingabeStellen) = True
+        sinPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub cosButton_Click(sender As Object, e As EventArgs) Handles cosButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -601,22 +589,19 @@ Public Class Eingabe
 
 
         redimArrays()
-        cosStelle(eingabeStellen) = True
+        cosPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
     Private Sub tanButton_Click(sender As Object, e As EventArgs) Handles tanButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -626,33 +611,21 @@ Public Class Eingabe
 
 
         redimArrays()
-        tanStelle(eingabeStellen) = True
+        tanPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
-
-        disableButtons()
-
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
     End Sub
 
-    Private Sub plusMinus_Click(sender As Object, e As EventArgs) Handles plusMinus.Click
-        'TODO: - merken und vor eingabe der Zahl drücken
 
-        displayFunction = displayFunction & "–"
-        displayBox2.Text = displayFunction
-        redimArrays()
-
-        eingabeZahlen(eingabeStellen) = eingabeZahlen(eingabeStellen) * (-1)
-
-    End Sub
 
     Private Sub logButton_Click(sender As Object, e As EventArgs) Handles logButton.Click
         Try
-            If eingabeZahlen(eingabeStellen) <> Nothing Or closeBracketStelle(eingabeStellen) = True Then
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
                 multiplyButton.PerformClick()
             End If
         Catch ex As Exception
@@ -662,18 +635,15 @@ Public Class Eingabe
 
 
         redimArrays()
-        logStelle(eingabeStellen) = True
+        logPos(entryPos) = True
 
-        eingabeStellen += 1
+        entryPos += 1
         redimArrays()
 
-        openBracketStelle(eingabeStellen) = True
-        eingabeStellen += 1
-        ReDim Preserve eingabeZahlen(eingabeStellen)
+        openBracketPos(entryPos) = True
+        entryPos += 1
+        ReDim Preserve entryNumber(entryPos)
         redimArrays()
-
-        disableButtons()
-
     End Sub
 
 
@@ -681,7 +651,6 @@ Public Class Eingabe
         displayFunction = displayFunction & "."
         displayBox2.Text = displayFunction
         iscommaActive = True
-        commaActivesinceOp = True
     End Sub
 
     Private Sub enterButton_Click(sender As Object, e As EventArgs) Handles enterButton.Click
@@ -689,82 +658,80 @@ Public Class Eingabe
 
         'close open remained brackets
         Dim y = 0, openBracketNumber = 0, closeBracketNumber = 0
-        For y = 0 To openBracketStelle.Length - 1
-            If openBracketStelle(y) = True Then
+        For y = 0 To openBracketPos.Length - 1
+            If openBracketPos(y) = True Then
                 openBracketNumber += 1
-            ElseIf closeBracketStelle(y) = True
+            ElseIf closeBracketPos(y) = True Then
                 closeBracketNumber += 1
             End If
         Next y
 
         While closeBracketNumber < openBracketNumber
-            eingabeStellen += 1
+            entryPos += 1
             redimArrays()
-            closeBracketStelle(eingabeStellen) = True
+            closeBracketPos(entryPos) = True
             closeBracketNumber += 1
-            ReDim Preserve eingabeZahlen(eingabeStellen)
+            ReDim Preserve entryNumber(entryPos)
         End While
 
-        Module1.multiStelle = multiStelle
-        Module1.divideStelle = divideStelle
-        Module1.plusStelle = plusStelle
-        Module1.minusStelle = minusStelle
-        Module1.eingabeZahlen = eingabeZahlen
+        Module1.multiPos = multiPos
+        Module1.dividePos = dividePos
+        Module1.plusPos = plusPos
+        Module1.minusPos = minusPos
+        Module1.entryNumber = entryNumber
         Module1.xPosition = xPosition
-        Module1.eStelle = eStelle
-        Module1.piStelle = piStelle
-        Module1.openBracketStelle = openBracketStelle
-        Module1.closeBracketStelle = closeBracketStelle
-        Module1.sinStelle = sinStelle
-        Module1.cosStelle = cosStelle
-        Module1.tanStelle = tanStelle
-        Module1.potencyStelle = potencyStelle
-        Module1.absStelle = absStelle
-        Module1.sqrtStelle = sqrtStelle
-        Module1.lnStelle = lnStelle
-        Module1.logStelle = logStelle
+        Module1.ePos = ePos
+        Module1.piPos = piPos
+        Module1.openBracketPos = openBracketPos
+        Module1.closeBracketPos = closeBracketPos
+        Module1.sinPos = sinPos
+        Module1.cosPos = cosPos
+        Module1.tanPos = tanPos
+        Module1.potencyPos = potencyPos
+        Module1.absPos = absPos
+        Module1.sqrtPos = sqrtPos
+        Module1.lnPos = lnPos
+        Module1.logPos = logPos
+        Module1.rndPos = rndPos
 
         Module1.eingabeState = True
-
 
         Manual.plotButton.PerformClick()
         Me.Close()
     End Sub
 
-    Private Sub donothingButton_Click(sender As Object, e As EventArgs) Handles donothingButton.Click
-        My.Computer.Audio.PlaySystemSound(
-            System.Media.SystemSounds.Asterisk)
+    Private Sub radianButton_Click(sender As Object, e As EventArgs) Handles radianButton.Click
+        'TODO: convert Rad into Deg 
+
+        If radianButton.Text = "Rad" Then
+            radianButton.Text = "Deg"
+            Module1._radian = False
+        Else
+            radianButton.Text = "Rad"
+            Module1._radian = True
+        End If
+
     End Sub
 
     Sub redimArrays()
-        'eingabeStellen = eingabeStellen + 1
-        ReDim Preserve multiStelle(eingabeStellen)
-        ReDim Preserve divideStelle(eingabeStellen)
-        ReDim Preserve plusStelle(eingabeStellen)
-        ReDim Preserve minusStelle(eingabeStellen)
-        ReDim Preserve xPosition(eingabeStellen)
-        ReDim Preserve eStelle(eingabeStellen)
-        ReDim Preserve piStelle(eingabeStellen)
-        ReDim Preserve openBracketStelle(eingabeStellen)
-        ReDim Preserve closeBracketStelle(eingabeStellen)
-        ReDim Preserve sinStelle(eingabeStellen)
-        ReDim Preserve cosStelle(eingabeStellen)
-        ReDim Preserve tanStelle(eingabeStellen)
-        ReDim Preserve potencyStelle(eingabeStellen)
-        ReDim Preserve absStelle(eingabeStellen)
-        ReDim Preserve sqrtStelle(eingabeStellen)
-        ReDim Preserve lnStelle(eingabeStellen)
-        ReDim Preserve logStelle(eingabeStellen)
+        'entryPos =entryPos + 1
+        ReDim Preserve multiPos(entryPos)
+        ReDim Preserve dividePos(entryPos)
+        ReDim Preserve plusPos(entryPos)
+        ReDim Preserve minusPos(entryPos)
+        ReDim Preserve xPosition(entryPos)
+        ReDim Preserve ePos(entryPos)
+        ReDim Preserve piPos(entryPos)
+        ReDim Preserve openBracketPos(entryPos)
+        ReDim Preserve closeBracketPos(entryPos)
+        ReDim Preserve sinPos(entryPos)
+        ReDim Preserve cosPos(entryPos)
+        ReDim Preserve tanPos(entryPos)
+        ReDim Preserve potencyPos(entryPos)
+        ReDim Preserve absPos(entryPos)
+        ReDim Preserve sqrtPos(entryPos)
+        ReDim Preserve lnPos(entryPos)
+        ReDim Preserve logPos(entryPos)
+        ReDim Preserve rndPos(entryPos)
     End Sub
-
-    Sub disableButtons()
-        sinButton.Enabled = False
-        cosButton.Enabled = False
-        tanButton.Enabled = False
-        sqrtButton.Enabled = False
-        absButton.Enabled = False
-        logButton.Enabled = False
-        lnButton.Enabled = False
-    End Sub
-
 End Class

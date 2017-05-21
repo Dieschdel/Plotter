@@ -10,10 +10,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Plotter")>
-<Assembly: AssemblyDescription("The 'manual' mode is under development and not fully functional.")>
+<Assembly: AssemblyDescription("Some functions can still show some bugs.")>
 <Assembly: AssemblyCompany("Mayer Software Development, Inc.")>
 <Assembly: AssemblyProduct("Plotter")>
-<Assembly: AssemblyCopyright("Copyright ©  2016 Christian Mayer")>
+<Assembly: AssemblyCopyright("Copyright © 2016-17 Christian Mayer")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -32,6 +32,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("0.4.0.0")>
-<Assembly: AssemblyFileVersion("0.4.0.0")>
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>
 <Assembly: NeutralResourcesLanguage("en")>
