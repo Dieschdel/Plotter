@@ -68,7 +68,7 @@ Partial Class Eingabe
         Me.threeButton.Location = New System.Drawing.Point(148, 363)
         Me.threeButton.Name = "threeButton"
         Me.threeButton.Size = New System.Drawing.Size(40, 40)
-        Me.threeButton.TabIndex = 0
+        Me.threeButton.TabIndex = 18
         Me.threeButton.Text = "3"
         Me.threeButton.UseVisualStyleBackColor = True
         '
@@ -244,7 +244,7 @@ Partial Class Eingabe
         Me.enterButton.Location = New System.Drawing.Point(194, 409)
         Me.enterButton.Name = "enterButton"
         Me.enterButton.Size = New System.Drawing.Size(40, 40)
-        Me.enterButton.TabIndex = 18
+        Me.enterButton.TabIndex = 0
         Me.enterButton.Text = "="
         Me.enterButton.UseVisualStyleBackColor = True
         '

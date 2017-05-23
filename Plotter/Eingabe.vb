@@ -1,5 +1,5 @@
 ﻿Option Explicit On
-'Version 1.0.0
+'Version 1.1.0
 
 Public Class Eingabe
 
@@ -16,15 +16,18 @@ Public Class Eingabe
 
     Dim iscommaActive As Boolean = False, commaCount As Integer = 0
 
+    Dim decimalExist As Boolean = False
 
     Dim xPosition(1) As Boolean
 
     Dim randIcon As Integer
 
+
     Private Sub Eingabe_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             Me.Location = New Point(My.Settings.LocationCalcX, My.Settings.LocationCalcY)
         Catch ex As Exception
+            Placement.Show()
         End Try
 
         displayFunction = ""
@@ -39,6 +42,8 @@ Public Class Eingabe
             mcButton.Image = (My.Resources.MineCraft)
         End If
 
+        Me.KeyPreview = True
+
         If Module1.keepGraph = True Then
             keepGraphCheck.Checked = True
         End If
@@ -49,6 +54,7 @@ Public Class Eingabe
             My.Settings.LocationCalcX = Me.Location.X
             My.Settings.LocationCalcY = Me.Location.Y
         Catch ex As Exception
+            Placement.Show()
         End Try
     End Sub
 
@@ -68,6 +74,61 @@ Public Class Eingabe
         End If
     End Sub
 
+    Private Sub Eingabe_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        'Debug.Print([Enum].GetName(GetType(Keys), e.KeyCode))
+
+        If e.KeyCode = Keys.D1 Or e.KeyCode = Keys.NumPad1 Then
+            oneButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D2 Or e.KeyCode = Keys.NumPad2 Then
+            twoButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D3 Or e.KeyCode = Keys.NumPad3 Then
+            threeButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D4 Or e.KeyCode = Keys.NumPad4 Then
+            fourButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D5 Or e.KeyCode = Keys.NumPad5 Then
+            fiveButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D6 Or e.KeyCode = Keys.NumPad6 Then
+            sixButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D7 Or e.KeyCode = Keys.NumPad7 Then
+            sevenButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D8 Or e.KeyCode = Keys.NumPad8 Then
+            eightButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D9 Or e.KeyCode = Keys.NumPad9 Then
+            nineButton.PerformClick()
+        ElseIf e.KeyCode = Keys.D0 Or e.KeyCode = Keys.NumPad0 Then
+            zeroButton.PerformClick()
+
+        ElseIf e.KeyCode = Keys.Add Or e.KeyCode = Keys.Oemplus Then
+            plusButton.PerformClick()
+        ElseIf e.KeyCode = Keys.Subtract Or e.KeyCode = Keys.OemMinus Then
+            minusButton.PerformClick()
+        ElseIf e.KeyCode = Keys.Multiply Then
+            multiplyButton.PerformClick()
+        ElseIf e.KeyCode = Keys.Divide Then
+            divideButton.PerformClick()
+
+        ElseIf e.KeyCode = Keys.S Then
+            sinButton.PerformClick()
+        ElseIf e.KeyCode = Keys.C Then
+            cosButton.PerformClick()
+        ElseIf e.KeyCode = Keys.T Then
+            tanButton.PerformClick()
+        ElseIf e.KeyCode = Keys.A Then
+            absButton.PerformClick()
+        ElseIf e.KeyCode = Keys.L Then
+            lnButton.PerformClick()
+        ElseIf e.KeyCode = Keys.R Then
+            roundButton.PerformClick()
+        ElseIf e.KeyCode = Keys.Oem5 Then
+            potencyButton.PerformClick()
+
+        ElseIf e.KeyCode = Keys.Decimal Then
+            commaButton.PerformClick()
+        ElseIf e.KeyCode = Keys.Execute Then
+            enterButton.PerformClick()
+        End If
+    End Sub
+
     Private Sub zeroButton_Click(sender As Object, e As EventArgs) Handles zeroButton.Click
         displayFunction = displayFunction & "0"
         displayBox2.Text = displayFunction
@@ -76,8 +137,14 @@ Public Class Eingabe
         If iscommaActive = True Then
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 0
+            Try
+                entryNumber(entryPos) &= 0
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub oneButton_Click(sender As Object, e As EventArgs) Handles oneButton.Click
@@ -98,9 +165,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.1
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 1
-
+            Try
+                entryNumber(entryPos) &= 1
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub twoButton_Click(sender As Object, e As EventArgs) Handles twoButton.Click
@@ -120,9 +192,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.2
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 2
-
+            Try
+                entryNumber(entryPos) &= 2
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub threeButton_Click(sender As Object, e As EventArgs) Handles threeButton.Click
@@ -142,8 +219,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.3
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 3
+            Try
+                entryNumber(entryPos) &= 3
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub fourButton_Click(sender As Object, e As EventArgs) Handles fourButton.Click
@@ -163,9 +246,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.4
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 4
-
+            Try
+                entryNumber(entryPos) &= 4
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub fiveButton_Click(sender As Object, e As EventArgs) Handles fiveButton.Click
@@ -185,8 +273,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.5
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 5
+            Try
+                entryNumber(entryPos) &= 5
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub sixButton_Click(sender As Object, e As EventArgs) Handles sixButton.Click
@@ -206,8 +300,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.6
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 6
+            Try
+                entryNumber(entryPos) &= 6
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub sevenButton_Click(sender As Object, e As EventArgs) Handles sevenButton.Click
@@ -227,8 +327,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.7
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 7
+            Try
+                entryNumber(entryPos) &= 7
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub eightButton_Click(sender As Object, e As EventArgs) Handles eightButton.Click
@@ -248,8 +354,14 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.8
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 8
+            Try
+                entryNumber(entryPos) &= 8
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub nineButton_Click(sender As Object, e As EventArgs) Handles nineButton.Click
@@ -269,17 +381,19 @@ Public Class Eingabe
             entryNumber(entryPos) += 0.9
             commaCount += 1
         Else
-            entryNumber(entryPos) &= 9
+            Try
+                entryNumber(entryPos) &= 9
+            Catch ex As Exception
+                Placement.Show()
+            End Try
         End If
+
+        decimalEntry()
     End Sub
 
     Private Sub bracketOpen_Click(sender As Object, e As EventArgs) Handles bracketOpen.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "("
         displayBox2.Text = displayFunction
 
@@ -317,6 +431,10 @@ Public Class Eingabe
     End Sub
 
     Private Sub minusButton_Click(sender As Object, e As EventArgs) Handles minusButton.Click
+        If decimalExist = False Then
+            zeroButton.PerformClick()
+        End If
+
         displayFunction = displayFunction & "-"
         displayBox2.Text = displayFunction
         entryPos += 1
@@ -332,6 +450,10 @@ Public Class Eingabe
     End Sub
 
     Private Sub multiplyButton_Click(sender As Object, e As EventArgs) Handles multiplyButton.Click
+        If decimalExist = False Then
+            Placement.Show()
+        End If
+
         displayFunction = displayFunction & "*"
         displayBox2.Text = displayFunction
         entryPos += 1
@@ -347,6 +469,10 @@ Public Class Eingabe
     End Sub
 
     Private Sub divideButton_Click(sender As Object, e As EventArgs) Handles divideButton.Click
+        If decimalExist = False Then
+            Placement.Show()
+        End If
+
         displayFunction = displayFunction & "/"
         displayBox2.Text = displayFunction
         entryPos += 1
@@ -362,48 +488,43 @@ Public Class Eingabe
     End Sub
 
     Private Sub piButton_Click(sender As Object, e As EventArgs) Handles piButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "π"
         displayBox2.Text = displayFunction
         redimArrays()
         piPos(entryPos) = True
+
+        decimalEntry()
     End Sub
 
     Private Sub eButton_Click(sender As Object, e As EventArgs) Handles eButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "e"
         displayBox2.Text = displayFunction
         redimArrays()
         ePos(entryPos) = True
+
+        decimalEntry()
     End Sub
 
     Private Sub xButton_Click(sender As Object, e As EventArgs) Handles xButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "x"
         displayBox2.Text = displayFunction
         redimArrays()
         xPosition(entryPos) = True
+
+        decimalEntry()
     End Sub
 
     Private Sub backButton_Click(sender As Object, e As EventArgs) Handles backButton.Click
 
         My.Computer.Audio.PlaySystemSound(
-            System.Media.SystemSounds.Asterisk)
+                System.Media.SystemSounds.Asterisk)
+
 
         'entryPos -= 1
         'redimArrays()
@@ -442,7 +563,7 @@ Public Class Eingabe
         ReDim logPos(entryPos)
         ReDim rndPos(entryPos)
 
-        roundButton.Enabled = True
+        decimalExist = False
     End Sub
 
 
@@ -468,12 +589,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub roundButton_Click(sender As Object, e As EventArgs) Handles roundButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "Rnd("
         displayBox2.Text = displayFunction
 
@@ -490,12 +607,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub absButton_Click(sender As Object, e As EventArgs) Handles absButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "abs("
         displayBox2.Text = displayFunction
 
@@ -512,12 +625,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub sqrtButton_Click(sender As Object, e As EventArgs) Handles sqrtButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "sqrt("
         displayBox2.Text = displayFunction
 
@@ -534,12 +643,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub lnButton_Click(sender As Object, e As EventArgs) Handles lnButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "ln("
         displayBox2.Text = displayFunction
 
@@ -556,12 +661,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub sinButton_Click(sender As Object, e As EventArgs) Handles sinButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "sin("
         displayBox2.Text = displayFunction
 
@@ -578,12 +679,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub cosButton_Click(sender As Object, e As EventArgs) Handles cosButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "cos("
         displayBox2.Text = displayFunction
 
@@ -600,12 +697,8 @@ Public Class Eingabe
     End Sub
 
     Private Sub tanButton_Click(sender As Object, e As EventArgs) Handles tanButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "tan("
         displayBox2.Text = displayFunction
 
@@ -624,12 +717,8 @@ Public Class Eingabe
 
 
     Private Sub logButton_Click(sender As Object, e As EventArgs) Handles logButton.Click
-        Try
-            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
-                multiplyButton.PerformClick()
-            End If
-        Catch ex As Exception
-        End Try
+        checkOperant()
+
         displayFunction = displayFunction & "log("
         displayBox2.Text = displayFunction
 
@@ -694,15 +783,13 @@ Public Class Eingabe
         Module1.logPos = logPos
         Module1.rndPos = rndPos
 
-        Module1.eingabeState = True
+        Module1._entryState = True
 
         Manual.plotButton.PerformClick()
         Me.Close()
     End Sub
 
     Private Sub radianButton_Click(sender As Object, e As EventArgs) Handles radianButton.Click
-        'TODO: convert Rad into Deg 
-
         If radianButton.Text = "Rad" Then
             radianButton.Text = "Deg"
             Module1._radian = False
@@ -710,7 +797,6 @@ Public Class Eingabe
             radianButton.Text = "Rad"
             Module1._radian = True
         End If
-
     End Sub
 
     Sub redimArrays()
@@ -733,5 +819,18 @@ Public Class Eingabe
         ReDim Preserve lnPos(entryPos)
         ReDim Preserve logPos(entryPos)
         ReDim Preserve rndPos(entryPos)
+    End Sub
+
+    Sub checkOperant()
+        Try
+            If entryNumber(entryPos) <> Nothing Or closeBracketPos(entryPos) = True Then
+                multiplyButton.PerformClick()
+            End If
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Sub decimalEntry()
+        decimalExist = True
     End Sub
 End Class

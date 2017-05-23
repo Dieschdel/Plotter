@@ -1,5 +1,6 @@
 ﻿Option Explicit On
-'Version 1.0.0
+'Version 1.1.0
+
 
 Public Class Manual
     Const boarder = 81
@@ -42,7 +43,6 @@ Public Class Manual
 
     Dim entryNumber2() As Double, entryNumber3() As Double, entryNumber4() As Double
     Dim xPosition2() As Boolean, xPosition3() As Boolean, xPosition4() As Boolean
-    Dim eingabeState As Boolean = False
 
     Dim oldPosX As Integer, oldPosY As Integer
     Dim cursorPosX As Integer, cursorPosY As Integer
@@ -67,23 +67,32 @@ Public Class Manual
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
-
     End Sub
 
     Private Sub setOld()
-        eingabeState = Module1.eingabeState
-        If eingabeState = True Then
+        If Module1._entryState = True Then
             startValue = calcFunction(xMin)
         End If
 
         xOld = CLng(xMin)
-        'yOld = (startValue)
         yOld = 0
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        'xMinbox.SelectAll()
         'Timer1.Enabled = True
+
+        Try
+            Me.Location = New Point(My.Settings.LocationX, My.Settings.LocationY)
+        Catch ex As Exception
+            Placement.Show()
+        End Try
+
+        Me.KeyPreview = True
+
+        Me.Width = 5000
+        Me.Height = 5000
+
+        grf = CreateGraphics()
 
         Me.Width = My.Computer.Screen.WorkingArea.Width / 2.259
         Me.Height = Me.Width * 1.106
@@ -91,20 +100,14 @@ Public Class Manual
         'Me.Width = 850
         'Me.Height = 940
 
-        Try
-            Me.Location = New Point(My.Settings.LocationX, My.Settings.LocationY)
-        Catch ex As Exception
-        End Try
 
-        Me.KeyPreview = True
-
-        grf = CreateGraphics()
     End Sub
+
 
     Private Sub Manual_ResizeEnd(sender As Object, e As EventArgs) Handles Me.ResizeEnd
         setWindow()
-        eingabeState = Module1.eingabeState
-        If eingabeState = True Then
+
+        If Module1._entryState = True Then
             plotFunction()
         End If
 
@@ -112,15 +115,12 @@ Public Class Manual
             My.Settings.LocationX = Me.Location.X
             My.Settings.LocationY = Me.Location.Y
         Catch ex As Exception
+            Placement.Show()
         End Try
     End Sub
 
     Private Sub plotButton_Click(sender As Object, e As EventArgs) Handles plotButton.Click
-        'getWindow()
-        'setWindow()
-
-        eingabeState = Module1.eingabeState
-        If eingabeState = True Then
+        If Module1._entryState = True Then
             plotFunction()
         End If
     End Sub
@@ -129,8 +129,7 @@ Public Class Manual
         getWindow()
         setWindow()
 
-        eingabeState = Module1.eingabeState
-        If eingabeState = True Then
+        If Module1._entryState = True Then
             plotFunction()
         End If
     End Sub
@@ -140,8 +139,7 @@ Public Class Manual
             getWindow()
             setWindow()
 
-            eingabeState = Module1.eingabeState
-            If eingabeState = True Then
+            If Module1._entryState = True Then
                 plotFunction()
             End If
         End If
@@ -735,18 +733,21 @@ Line1:
                     copyBracketArrays(i)
                     GoTo Line1
                 Catch
-                    MsgBox("An unknown error was found")
-                    Me.Close()
+                    Placement.Show()
                 End Try
             ElseIf dividePos4(i) = True Then
                 Try
+                    If entryNumber4(i + 1) = 0 Then
+                        zeroDivision.Show()
+                        Me.Close()
+                    End If
+
                     ergebnis = entryNumber4(i - 1) / entryNumber4(i + 1)
                     entryNumber4(i - 1) = ergebnis
                     copyBracketArrays(i)
                     GoTo Line1
                 Catch
-                    MsgBox("An unknown error was found")
-                    Me.Close()
+                    Placement.Show()
                 End Try
             End If
         Next i
@@ -758,15 +759,13 @@ Line1:
                 Try
                     ergebnis += entryNumber4(i + 1)
                 Catch
-                    MsgBox("An unknown error was found")
-                    Me.Close()
+                    Placement.Show()
                 End Try
             ElseIf minusPos4(i) = True Then
                 Try
                     ergebnis -= entryNumber4(i + 1)
                 Catch
-                    MsgBox("An unknown error was found")
-                    Me.Close()
+                    Placement.Show()
                 End Try
             End If
         Next i
@@ -798,6 +797,10 @@ Line2:
                 copyArrays(i)
                 GoTo Line2
             ElseIf dividePos3(i) = True Then
+                If entryNumber3(i + 1) = 0 Then
+                    zeroDivision.Show()
+                    Me.Close()
+                End If
 
                 ergebnis = entryNumber3(i - 1) / entryNumber3(i + 1)
                 entryNumber3(i - 1) = ergebnis
@@ -824,4 +827,6 @@ Line2:
 
         Return ergebnis
     End Function
+
+
 End Class
