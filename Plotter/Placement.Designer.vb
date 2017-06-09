@@ -32,7 +32,7 @@ Partial Class Placement
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 159)
+        Me.Label1.Location = New System.Drawing.Point(12, 120)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(241, 13)
         Me.Label1.TabIndex = 0
@@ -41,7 +41,7 @@ Partial Class Placement
         'adBox
         '
         Me.adBox.Image = CType(resources.GetObject("adBox.Image"), System.Drawing.Image)
-        Me.adBox.Location = New System.Drawing.Point(12, 175)
+        Me.adBox.Location = New System.Drawing.Point(12, 135)
         Me.adBox.Name = "adBox"
         Me.adBox.Size = New System.Drawing.Size(600, 134)
         Me.adBox.TabIndex = 1
@@ -53,7 +53,7 @@ Partial Class Placement
         Me.errorBox.Location = New System.Drawing.Point(15, 12)
         Me.errorBox.Multiline = True
         Me.errorBox.Name = "errorBox"
-        Me.errorBox.Size = New System.Drawing.Size(597, 144)
+        Me.errorBox.Size = New System.Drawing.Size(597, 105)
         Me.errorBox.TabIndex = 2
         '
         'Placement

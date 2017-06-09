@@ -1,5 +1,6 @@
 ﻿Option Explicit On
 'Version 1.1.0
+'Update 09.06.17
 
 
 Public Class Manual

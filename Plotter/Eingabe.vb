@@ -140,6 +140,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 0
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -168,6 +169,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 1
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -195,6 +197,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 2
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -222,6 +225,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 3
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -249,6 +253,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 4
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -276,6 +281,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 5
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -303,6 +309,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 6
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -330,6 +337,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 7
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -357,6 +365,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 8
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If
@@ -384,6 +393,7 @@ Public Class Eingabe
             Try
                 entryNumber(entryPos) &= 9
             Catch ex As Exception
+                Module1._errrorCode = "001"
                 Placement.Show()
             End Try
         End If

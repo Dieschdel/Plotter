@@ -14,4 +14,5 @@ Module Module1
 
     Public keepGraph As Boolean = False
     Public _radian As Boolean = True
+    Public _errrorCode As String = ""
 End Module
